@@ -45,7 +45,7 @@ internal class GameWagerSettledQueryService : IQueryService<GameWagerSettledQuer
                 ExternalCreatedOn: resp.BetPlaced,
                 ExternalClosedOn: resp.MarketSettledDate,
                 Bet: resp.MatchStake,
-                Settle: resp.MatchStake + resp.ProfitLoss,
+                Settle: resp.BetStatus.Equals("Settled", StringComparison.OrdinalIgnoreCase) ? resp.MatchStake + resp.ProfitLoss : 0.0m,
                 WinLoss: resp.ProfitLoss,
                 AdditionalData: resp.AdditionalData);
         }
