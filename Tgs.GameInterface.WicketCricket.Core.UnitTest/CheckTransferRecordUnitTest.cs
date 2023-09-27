@@ -46,8 +46,7 @@ public class CheckTransferRecordUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -73,8 +72,7 @@ public class CheckTransferRecordUnitTest
                 cert: cert,
                 userId: userId,
                 tsCode: tsCode)
-            .AsTask())
-            .ConfigureAwait(false);
+            .AsTask());
     }
 
     [Fact]
@@ -118,14 +116,13 @@ public class CheckTransferRecordUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-                .WithContent(
-                await content
-                .ReadAsStringAsync(
-                    cancellationToken: Arg.Any<CancellationToken>())
-                .ConfigureAwait(false))
-                .Respond(
-                HttpStatusCode.OK,
-                new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(
+            await content
+            .ReadAsStringAsync(
+                cancellationToken: Arg.Any<CancellationToken>()))
+            .Respond(
+            HttpStatusCode.OK,
+            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -146,8 +143,7 @@ public class CheckTransferRecordUnitTest
             website: website,
             cert: cert,
             userId: userId,
-            tsCode: tsCode)
-            .ConfigureAwait(false);
+            tsCode: tsCode);
 
         Assert.True(actual);
     }
@@ -192,8 +188,7 @@ public class CheckTransferRecordUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -217,8 +212,7 @@ public class CheckTransferRecordUnitTest
             website: website,
             cert: cert,
             userId: userId,
-            tsCode: tsCode)
-            .ConfigureAwait(false);
+            tsCode: tsCode);
 
         Assert.False(actual);
     }

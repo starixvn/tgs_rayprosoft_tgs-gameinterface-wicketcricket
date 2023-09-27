@@ -36,8 +36,7 @@ public class LogoutAllUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -60,8 +59,7 @@ public class LogoutAllUnitTest
             exchangeApiUrl: apiUrl,
             website: website,
             cert: cert,
-            agent: agent)
-            .ConfigureAwait(false);
+            agent: agent);
     }
 
     [Fact]
@@ -89,8 +87,7 @@ public class LogoutAllUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -115,7 +112,6 @@ public class LogoutAllUnitTest
                 website: website,
                 cert: cert,
                 agent: agent)
-            .AsTask())
-            .ConfigureAwait(false);
+            .AsTask());
     }
 }

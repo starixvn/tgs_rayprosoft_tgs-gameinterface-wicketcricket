@@ -29,7 +29,6 @@ public class PlayerLogoutCommandServiceUnitTest
 
         await client
             .ExecuteAsync(
-             command)
-            .ConfigureAwait(false);
+             command);
     }
 }

@@ -85,8 +85,7 @@ public class GameWagerUnsettledQueryServiceUnitTest
         var actual = await client
             .QueryAsync(
                query)
-            .ToArrayAsync()
-           .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal("4ue0ujotpmuu", actual.ElementAt(0).PlayerCode);

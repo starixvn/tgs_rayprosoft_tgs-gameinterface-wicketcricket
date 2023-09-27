@@ -35,7 +35,6 @@ public class PlayerCreateCommandServiceUnitTest
 
         await client
             .ExecuteAsync(
-             command)
-            .ConfigureAwait(false);
+             command);
     }
 }

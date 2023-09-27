@@ -48,8 +48,7 @@ public class GetBalancesUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -72,8 +71,7 @@ public class GetBalancesUnitTest
             apiUrl: apiUrl,
             website: website,
             cert: cert)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal("4ue0ujotpmuu", actual.ElementAt(0).UserId);
@@ -116,8 +114,7 @@ public class GetBalancesUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -140,8 +137,7 @@ public class GetBalancesUnitTest
             apiUrl: apiUrl,
             website: website,
             cert: cert)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal("4ue0ujotpmuu", actual.ElementAt(0).UserId);
@@ -173,8 +169,7 @@ public class GetBalancesUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -199,7 +194,6 @@ public class GetBalancesUnitTest
                 website: website,
                 cert: cert)
             .ToArrayAsync()
-            .AsTask())
-            .ConfigureAwait(false);
+            .AsTask());
     }
 }

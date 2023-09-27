@@ -50,8 +50,7 @@ public class GetBalanceUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -74,8 +73,7 @@ public class GetBalanceUnitTest
             apiUrl: apiUrl,
             website: website,
             cert: cert,
-            userId: userId)
-            .ConfigureAwait(false);
+            userId: userId);
 
         Assert.True(actual.IsPlayerExist);
         Assert.Equal(0.0m, actual.Balance);
@@ -119,8 +117,7 @@ public class GetBalanceUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -143,8 +140,7 @@ public class GetBalanceUnitTest
             apiUrl: apiUrl,
             website: website,
             cert: cert,
-            userId: userId)
-            .ConfigureAwait(false);
+            userId: userId);
 
         Assert.True(actual.IsPlayerExist);
         Assert.Equal(8060.00m, actual.Balance);
@@ -177,8 +173,7 @@ public class GetBalanceUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -201,8 +196,7 @@ public class GetBalanceUnitTest
             apiUrl: apiUrl,
             website: website,
             cert: cert,
-            userId: userId)
-            .ConfigureAwait(false);
+            userId: userId);
 
         Assert.False(actual.IsPlayerExist);
         Assert.Equal(0.0m, actual.Balance);
@@ -234,8 +228,7 @@ public class GetBalanceUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -260,7 +253,6 @@ public class GetBalanceUnitTest
                 website: website,
                 cert: cert,
                 userId: userId)
-            .AsTask())
-            .ConfigureAwait(false);
+            .AsTask());
     }
 }

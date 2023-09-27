@@ -47,8 +47,7 @@ public class WithdrawUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -73,8 +72,7 @@ public class WithdrawUnitTest
             cert: cert,
             userId: userId,
             tsCode: tsCode,
-            amount: amount)
-            .ConfigureAwait(false);
+            amount: amount);
 
         Assert.Equal(response.ToJsonString(), actual.Resp);
     }
@@ -109,8 +107,7 @@ public class WithdrawUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -138,8 +135,7 @@ public class WithdrawUnitTest
                 userId: userId,
                 tsCode: tsCode,
                 amount: amount)
-            .AsTask())
-            .ConfigureAwait(false);
+            .AsTask());
     }
 
     [Fact]
@@ -175,8 +171,7 @@ public class WithdrawUnitTest
                 userId: userId,
                 tsCode: tsCode,
                 amount: amount)
-            .AsTask())
-            .ConfigureAwait(false);
+            .AsTask());
     }
 
     [Fact]
@@ -209,8 +204,7 @@ public class WithdrawUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -238,7 +232,6 @@ public class WithdrawUnitTest
                 userId: userId,
                 tsCode: tsCode,
                 amount: amount)
-            .AsTask())
-            .ConfigureAwait(false);
+            .AsTask());
     }
 }

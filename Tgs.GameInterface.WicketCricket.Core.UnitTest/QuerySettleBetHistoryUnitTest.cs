@@ -90,8 +90,7 @@ public class QuerySettleBetHistoryUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -118,8 +117,7 @@ public class QuerySettleBetHistoryUnitTest
             endTime: endTime,
             reportType: reportType,
             pageNumber: pageNumber)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal(-10020383, actual.ElementAt(0).EventId);
@@ -219,8 +217,7 @@ public class QuerySettleBetHistoryUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -247,8 +244,7 @@ public class QuerySettleBetHistoryUnitTest
             endTime: endTime,
             reportType: reportType,
             pageNumber: pageNumber)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal(32664175, actual.ElementAt(0).EventId);
@@ -347,8 +343,7 @@ public class QuerySettleBetHistoryUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -375,8 +370,7 @@ public class QuerySettleBetHistoryUnitTest
             endTime: endTime,
             reportType: reportType,
             pageNumber: pageNumber)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal(-10020389, actual.ElementAt(0).EventId);
@@ -469,8 +463,7 @@ public class QuerySettleBetHistoryUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -497,8 +490,7 @@ public class QuerySettleBetHistoryUnitTest
             endTime: endTime,
             reportType: reportType,
             pageNumber: pageNumber)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal(-10020452, actual.ElementAt(0).EventId);
@@ -591,8 +583,7 @@ public class QuerySettleBetHistoryUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -619,8 +610,7 @@ public class QuerySettleBetHistoryUnitTest
             endTime: endTime,
             reportType: reportType,
             pageNumber: pageNumber)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.False(actual.Any());
     }
@@ -658,8 +648,7 @@ public class QuerySettleBetHistoryUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -688,7 +677,6 @@ public class QuerySettleBetHistoryUnitTest
                 reportType: reportType,
                 pageNumber: pageNumber)
             .ToArrayAsync()
-            .AsTask())
-            .ConfigureAwait(false);
+            .AsTask());
     }
 }

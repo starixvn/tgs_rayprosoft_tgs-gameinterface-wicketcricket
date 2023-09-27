@@ -88,14 +88,13 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-                .WithContent(
-                await content
-                .ReadAsStringAsync(
-                    cancellationToken: Arg.Any<CancellationToken>())
-                .ConfigureAwait(false))
-                .Respond(
-                HttpStatusCode.OK,
-                new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(
+            await content
+            .ReadAsStringAsync(
+                cancellationToken: Arg.Any<CancellationToken>()))
+            .Respond(
+            HttpStatusCode.OK,
+            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -118,8 +117,7 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
             lastUpdateTime: lastUpdateTime,
             reportType: reportType,
             pageNumber: pageNumber)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal(-10020074, actual.ElementAt(0).EventId);
@@ -212,14 +210,13 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-                .WithContent(
-                await content
-                .ReadAsStringAsync(
-                    cancellationToken: Arg.Any<CancellationToken>())
-                .ConfigureAwait(false))
-                .Respond(
-                HttpStatusCode.OK,
-                new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(
+            await content
+            .ReadAsStringAsync(
+                cancellationToken: Arg.Any<CancellationToken>()))
+            .Respond(
+            HttpStatusCode.OK,
+            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -242,8 +239,7 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
             lastUpdateTime: lastUpdateTime,
             reportType: reportType,
             pageNumber: pageNumber)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal(32649630, actual.ElementAt(0).EventId);
@@ -337,14 +333,13 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-                .WithContent(
-                await content
-                .ReadAsStringAsync(
-                    cancellationToken: Arg.Any<CancellationToken>())
-                .ConfigureAwait(false))
-                .Respond(
-                HttpStatusCode.OK,
-                new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(
+            await content
+            .ReadAsStringAsync(
+                cancellationToken: Arg.Any<CancellationToken>()))
+            .Respond(
+            HttpStatusCode.OK,
+            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -367,8 +362,7 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
             lastUpdateTime: lastUpdateTime,
             reportType: reportType,
             pageNumber: pageNumber)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal(-10020389, actual.ElementAt(0).EventId);
@@ -461,14 +455,13 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-                .WithContent(
-                await content
-                .ReadAsStringAsync(
-                    cancellationToken: Arg.Any<CancellationToken>())
-                .ConfigureAwait(false))
-                .Respond(
-                HttpStatusCode.OK,
-                new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(
+            await content
+            .ReadAsStringAsync(
+                cancellationToken: Arg.Any<CancellationToken>()))
+            .Respond(
+            HttpStatusCode.OK,
+            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -491,8 +484,7 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
             lastUpdateTime: lastUpdateTime,
             reportType: reportType,
             pageNumber: pageNumber)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.False(actual.Any());
     }
@@ -526,14 +518,13 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-                .WithContent(
-                await content
-                .ReadAsStringAsync(
-                    cancellationToken: Arg.Any<CancellationToken>())
-                .ConfigureAwait(false))
-                .Respond(
-                HttpStatusCode.OK,
-                new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(
+            await content
+            .ReadAsStringAsync(
+                cancellationToken: Arg.Any<CancellationToken>()))
+            .Respond(
+            HttpStatusCode.OK,
+            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -558,8 +549,7 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
                 reportType: reportType,
                 pageNumber: pageNumber)
             .ToArrayAsync()
-            .AsTask())
-            .ConfigureAwait(false);
+            .AsTask());
     }
 
     [Fact]
@@ -638,14 +628,13 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-                .WithContent(
-                await content
-                .ReadAsStringAsync(
-                    cancellationToken: Arg.Any<CancellationToken>())
-                .ConfigureAwait(false))
-                .Respond(
-                HttpStatusCode.OK,
-                new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(
+            await content
+            .ReadAsStringAsync(
+                cancellationToken: Arg.Any<CancellationToken>()))
+            .Respond(
+            HttpStatusCode.OK,
+            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -668,8 +657,7 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
             lastUpdateTime: lastUpdateTime,
             reportType: reportType,
             pageNumber: pageNumber)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal(-10020371, actual.ElementAt(0).EventId);

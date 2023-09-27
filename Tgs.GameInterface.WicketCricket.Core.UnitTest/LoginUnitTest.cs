@@ -34,8 +34,7 @@ public class LoginUnitTest
             website: website,
             userId: userId,
             key: key,
-            eventType: eventType)
-            .ConfigureAwait(false);
+            eventType: eventType);
 
         Assert.Equal("https://test81.cckk77.net:443/apiWallet/player/WICKETSPRO/login?userId=4ue0ujotpmuu&key=nH9drDC2V74%2bmqa%2bsbtf28WmiHIwnkXv09F4IYvhYQAWdNKqiLHupZg8k%2bBwEtJy&eventType=1", actual);
     }

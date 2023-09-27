@@ -45,8 +45,7 @@ public class GetKeyUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -72,8 +71,7 @@ public class GetKeyUnitTest
             userId: userId,
             userName: userName,
             agent: agent,
-            currency: currency)
-            .ConfigureAwait(false);
+            currency: currency);
 
         Assert.Equal(response["key"]!.GetValue<string>(), actual);
     }
@@ -109,8 +107,7 @@ public class GetKeyUnitTest
             .WithContent(
             await content
             .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>())
-            .ConfigureAwait(false))
+                cancellationToken: Arg.Any<CancellationToken>()))
             .Respond(
             HttpStatusCode.OK,
             new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
@@ -138,7 +135,6 @@ public class GetKeyUnitTest
                 userName: userName,
                 agent: agent,
                 currency: currency)
-            .AsTask())
-            .ConfigureAwait(false);
+            .AsTask());
     }
 }
