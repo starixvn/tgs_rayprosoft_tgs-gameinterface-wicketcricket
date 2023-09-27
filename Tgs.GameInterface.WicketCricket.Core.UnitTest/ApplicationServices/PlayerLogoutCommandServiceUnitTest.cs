@@ -1,0 +1,35 @@
+﻿using NSubstitute;
+using Tgs.GameInterface.WicketCricket.Core.ApplicationServices;
+
+namespace Tgs.GameInterface.WicketCricket.Core.UnitTest.ApplicationServices;
+
+public class PlayerLogoutCommandServiceUnitTest
+{
+    [Fact]
+    public async Task Normal_Process()
+    {
+        var fakeGameApiClient = Substitute.For<IGameApiClient>();
+
+        var command = new PlayerLogoutCommand(
+            ExchangeApiUrl: new Uri("https://test81.cckk77.net/"),
+            Website: "WICKETSPRO",
+            Cert: "wkVwQ8sMVr252EA9",
+            PlayerCode: "4ue0ujotpmuu");
+
+        _ = fakeGameApiClient
+            .LogoutAsync(
+            exchangeApiUrl: Arg.Is(command.ExchangeApiUrl),
+            website: Arg.Is(command.Website),
+            cert: Arg.Is(command.Cert),
+            userId: Arg.Is(command.PlayerCode),
+            cancellationToken: Arg.Any<CancellationToken>());
+
+        var client = new PlayerLogoutCommandService(
+            fakeGameApiClient);
+
+        await client
+            .ExecuteAsync(
+             command)
+            .ConfigureAwait(false);
+    }
+}
