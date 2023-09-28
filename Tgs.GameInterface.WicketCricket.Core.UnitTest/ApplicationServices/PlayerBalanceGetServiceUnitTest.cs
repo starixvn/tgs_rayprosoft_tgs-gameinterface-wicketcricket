@@ -35,7 +35,8 @@ public class PlayerBalanceGetServiceUnitTest
 
         var actual = await client
             .GetAsync(
-               query);
+               query)
+            .ConfigureAwait(false);
 
         Assert.NotNull(actual);
         Assert.Equal(10000m, actual.Balance);

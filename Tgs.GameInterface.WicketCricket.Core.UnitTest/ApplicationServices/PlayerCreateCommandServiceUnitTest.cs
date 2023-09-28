@@ -23,7 +23,8 @@ public class PlayerCreateCommandServiceUnitTest
 
         await client
             .ExecuteAsync(
-             command);
+             command)
+            .ConfigureAwait(false);
 
         _ = fakeGameApiClient
             .Received(1)

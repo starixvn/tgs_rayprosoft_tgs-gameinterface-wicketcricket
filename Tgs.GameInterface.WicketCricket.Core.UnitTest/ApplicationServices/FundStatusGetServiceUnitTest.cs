@@ -32,7 +32,8 @@ public class FundStatusGetServiceUnitTest
 
         var actual = await client
             .GetAsync(
-               query);
+               query)
+            .ConfigureAwait(false);
 
         Assert.True(actual);
     }

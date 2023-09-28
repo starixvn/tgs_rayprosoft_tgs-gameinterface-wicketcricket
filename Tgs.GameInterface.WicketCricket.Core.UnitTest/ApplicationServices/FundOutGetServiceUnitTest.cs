@@ -41,7 +41,8 @@ public class FundOutGetServiceUnitTest
 
         var actual = await client
             .GetAsync(
-               query);
+               query)
+            .ConfigureAwait(false);
 
         Assert.NotNull(actual);
         Assert.Equal(result.Resp, actual.Resp);
