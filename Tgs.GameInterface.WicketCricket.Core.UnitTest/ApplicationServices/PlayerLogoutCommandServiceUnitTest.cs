@@ -16,19 +16,20 @@ public class PlayerLogoutCommandServiceUnitTest
             Cert: "wkVwQ8sMVr252EA9",
             PlayerCode: "4ue0ujotpmuu");
 
-        _ = fakeGameApiClient
-            .LogoutAsync(
-            exchangeApiUrl: Arg.Is(command.ExchangeApiUrl),
-            website: Arg.Is(command.Website),
-            cert: Arg.Is(command.Cert),
-            userId: Arg.Is(command.PlayerCode),
-            cancellationToken: Arg.Any<CancellationToken>());
-
         var client = new PlayerLogoutCommandService(
             fakeGameApiClient);
 
         await client
             .ExecuteAsync(
              command);
+
+        _ = fakeGameApiClient
+            .Received(1)
+            .LogoutAsync(
+            exchangeApiUrl: Arg.Is(command.ExchangeApiUrl),
+            website: Arg.Is(command.Website),
+            cert: Arg.Is(command.Cert),
+            userId: Arg.Is(command.PlayerCode),
+            cancellationToken: Arg.Any<CancellationToken>());
     }
 }

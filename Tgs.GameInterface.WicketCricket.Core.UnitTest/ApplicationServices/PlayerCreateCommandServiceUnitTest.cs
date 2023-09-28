@@ -18,7 +18,15 @@ public class PlayerCreateCommandServiceUnitTest
             PlayerCode: "4ue0ujotpmuu",
             Currency: 2);
 
+        var client = new PlayerCreateCommandService(
+            fakeGameApiClient);
+
+        await client
+            .ExecuteAsync(
+             command);
+
         _ = fakeGameApiClient
+            .Received(1)
             .GetKeyAsync(
             exchangeApiUrl: Arg.Is(command.ExchangeApiUrl),
             website: Arg.Is(command.Website),
@@ -27,14 +35,6 @@ public class PlayerCreateCommandServiceUnitTest
             userName: Arg.Is(command.PlayerCode),
             agent: Arg.Is(command.Agent),
             currency: Arg.Is(command.Currency),
-            cancellationToken: Arg.Any<CancellationToken>())
-            .Returns(Guid.NewGuid().ToString("N"));
-
-        var client = new PlayerCreateCommandService(
-            fakeGameApiClient);
-
-        await client
-            .ExecuteAsync(
-             command);
+            cancellationToken: Arg.Any<CancellationToken>());
     }
 }
