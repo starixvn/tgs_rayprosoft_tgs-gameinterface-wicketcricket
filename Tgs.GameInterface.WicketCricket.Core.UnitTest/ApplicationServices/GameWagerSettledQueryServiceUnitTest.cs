@@ -87,8 +87,7 @@ public class GameWagerSettledQueryServiceUnitTest
             startTime: Arg.Is(query.StartTime),
             endTime: Arg.Is(query.EndTime),
             reportType: Arg.Is(query.ReportType),
-            pageNumber: Arg.Is(query.PageNumber),
-            cancellationToken: Arg.Any<CancellationToken>())
+            pageNumber: Arg.Is(query.PageNumber))
             .Returns(resps.ToAsyncEnumerable());
 
         var client = new GameWagerSettledQueryService(
@@ -188,8 +187,7 @@ public class GameWagerSettledQueryServiceUnitTest
             startTime: Arg.Is(query.StartTime),
             endTime: Arg.Is(query.EndTime),
             reportType: Arg.Is(query.ReportType),
-            pageNumber: Arg.Is(query.PageNumber),
-            cancellationToken: Arg.Any<CancellationToken>())
+            pageNumber: Arg.Is(query.PageNumber))
             .Returns(resps.ToAsyncEnumerable());
 
         var client = new GameWagerSettledQueryService(
