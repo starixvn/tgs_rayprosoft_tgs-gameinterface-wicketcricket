@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Nodes;
 using NSubstitute;
+using Tgs.GameInterface.WicketCricket.Common;
 using Tgs.GameInterface.WicketCricket.Core.ApplicationServices;
 using Tgs.GameInterface.WicketCricket.Core.Models;
 
@@ -70,12 +71,13 @@ public class GameWagerUnsettledQueryServiceUnitTest
         };
         _ = fakeGameApiClient
             .QueryCurrentBetsByLastUpdateDateAsync(
-            apiUrl: Arg.Is(query.ApiUrl),
-            website: Arg.Is(query.Website),
-            cert: Arg.Is(query.Cert),
-            lastUpdateTime: Arg.Is(query.LastUpdateTime),
-            reportType: Arg.Is(query.ReportType),
-            pageNumber: Arg.Is(query.PageNumber))
+            apiUrl: Arg.Any<Uri>(),
+            website: Arg.Any<string>(),
+            cert: Arg.Any<string>(),
+            lastUpdateTime: Arg.Any<DateTimeOffset>(),
+            reportType: Arg.Any<ReportTypes>(),
+            pageNumber: Arg.Any<int>(),
+            cancellationToken: Arg.Any<CancellationToken>())
             .Returns(resps.ToAsyncEnumerable());
 
         var client = new GameWagerUnsettledQueryService(

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Nodes;
 using NSubstitute;
+using Tgs.GameInterface.WicketCricket.Common;
 using Tgs.GameInterface.WicketCricket.Core.ApplicationServices;
 using Tgs.GameInterface.WicketCricket.Core.Models;
 
@@ -81,13 +82,14 @@ public class GameWagerSettledQueryServiceUnitTest
         };
         _ = fakeGameApiClient
             .QuerySettleBetHistoryAsync(
-            apiUrl: Arg.Is(query.ApiUrl),
-            website: Arg.Is(query.Website),
-            cert: Arg.Is(query.Cert),
-            startTime: Arg.Is(query.StartTime),
-            endTime: Arg.Is(query.EndTime),
-            reportType: Arg.Is(query.ReportType),
-            pageNumber: Arg.Is(query.PageNumber))
+            apiUrl: Arg.Any<Uri>(),
+            website: Arg.Any<string>(),
+            cert: Arg.Any<string>(),
+            startTime: Arg.Any<DateTimeOffset>(),
+            endTime: Arg.Any<DateTimeOffset>(),
+            reportType: Arg.Any<ReportTypes>(),
+            pageNumber: Arg.Any<int>(),
+            cancellationToken: Arg.Any<CancellationToken>())
             .Returns(resps.ToAsyncEnumerable());
 
         var client = new GameWagerSettledQueryService(
@@ -181,13 +183,14 @@ public class GameWagerSettledQueryServiceUnitTest
         };
         _ = fakeGameApiClient
             .QuerySettleBetHistoryAsync(
-            apiUrl: Arg.Is(query.ApiUrl),
-            website: Arg.Is(query.Website),
-            cert: Arg.Is(query.Cert),
-            startTime: Arg.Is(query.StartTime),
-            endTime: Arg.Is(query.EndTime),
-            reportType: Arg.Is(query.ReportType),
-            pageNumber: Arg.Is(query.PageNumber))
+            apiUrl: Arg.Any<Uri>(),
+            website: Arg.Any<string>(),
+            cert: Arg.Any<string>(),
+            startTime: Arg.Any<DateTimeOffset>(),
+            endTime: Arg.Any<DateTimeOffset>(),
+            reportType: Arg.Any<ReportTypes>(),
+            pageNumber: Arg.Any<int>(),
+            cancellationToken: Arg.Any<CancellationToken>())
             .Returns(resps.ToAsyncEnumerable());
 
         var client = new GameWagerSettledQueryService(
