@@ -50,8 +50,8 @@ app.kubernetes.io/name: {{ include "game-gameinterface-wicketcricket.name" . }}
 app.kubernetes.io/instance: RELEASE-NAME
 app: {{ include "game-gameinterface-wicketcricket.name" . }}
 tgs.kind: game
-tgs.game.kind: wicketcricket
-tgs.gameprovider.kind: jdb
+tgs.game.kind: gameinterface
+tgs.gameprovider.kind: wicketcricket
 {{- end }}
 
 {{/*
