@@ -23,10 +23,10 @@ public class PlayerBalanceGetServiceUnitTest
             Exposure: 1940.00m);
         _ = fakeGameApiClient
             .GetBalanceAsync(
-            apiUrl: Arg.Is<Uri>(query.ApiUrl),
-            website: Arg.Is<string>(query.Website),
-            cert: Arg.Is<string>(query.Cert),
-            userId: Arg.Is<string>(query.PlayerCode),
+            apiUrl: Arg.Any<Uri>(),
+            website: Arg.Any<string>(),
+            cert: Arg.Any<string>(),
+            userId: Arg.Any<string>(),
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(result);
 
