@@ -41,8 +41,7 @@ public class FundOutGetServiceUnitTest
 
         var actual = await service
             .GetAsync(
-            query,
-            Arg.Any<CancellationToken>());
+            query);
 
         Assert.NotNull(actual);
         Assert.Equal(result.Resp, actual.Resp);

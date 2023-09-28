@@ -23,8 +23,7 @@ public class PlayerCreateCommandServiceUnitTest
 
         await service
             .ExecuteAsync(
-             command,
-             Arg.Any<CancellationToken>());
+             command);
 
         _ = fakeGameApiClient
             .Received(1)

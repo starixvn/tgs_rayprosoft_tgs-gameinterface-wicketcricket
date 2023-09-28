@@ -21,16 +21,15 @@ public class PlayerLogoutCommandServiceUnitTest
 
         await service
             .ExecuteAsync(
-             command,
-              Arg.Any<CancellationToken>());
+             command);
 
         _ = fakeGameApiClient
-            .Received(1)
-            .LogoutAsync(
-            exchangeApiUrl: Arg.Is(command.ExchangeApiUrl),
-            website: Arg.Is(command.Website),
-            cert: Arg.Is(command.Cert),
-            userId: Arg.Is(command.PlayerCode),
-            cancellationToken: Arg.Any<CancellationToken>());
+          .Received(1)
+          .LogoutAsync(
+          exchangeApiUrl: Arg.Is(command.ExchangeApiUrl),
+          website: Arg.Is(command.Website),
+          cert: Arg.Is(command.Cert),
+          userId: Arg.Is(command.PlayerCode),
+          cancellationToken: Arg.Any<CancellationToken>());
     }
 }

@@ -25,15 +25,14 @@ public class FundStatusGetServiceUnitTest
             userId: Arg.Is(query.PlayerCode),
             tsCode: Arg.Is(query.Txid),
             cancellationToken: Arg.Any<CancellationToken>())
-            .Returns(true);
+            .Returns(ValueTask.FromResult(true));
 
         var service = new FundStatusGetService(
             fakeGameApiClient);
 
         var actual = await service
             .GetAsync(
-            query,
-            Arg.Any<CancellationToken>());
+            query);
 
         Assert.True(actual);
     }

@@ -96,8 +96,7 @@ public class GameWagerSettledQueryServiceUnitTest
 
         var actual = await service
             .QueryAsync(
-            query,
-            Arg.Any<CancellationToken>())
+            query)
             .ToArrayAsync();
 
         Assert.True(actual.Any());
@@ -198,8 +197,7 @@ public class GameWagerSettledQueryServiceUnitTest
 
         var actual = await service
             .QueryAsync(
-            query,
-            Arg.Any<CancellationToken>())
+            query)
             .ToArrayAsync();
 
         Assert.True(actual.Any());
