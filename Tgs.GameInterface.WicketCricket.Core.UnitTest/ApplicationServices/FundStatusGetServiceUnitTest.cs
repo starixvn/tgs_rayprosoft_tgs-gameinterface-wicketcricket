@@ -27,13 +27,13 @@ public class FundStatusGetServiceUnitTest
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(true);
 
-        var client = new FundStatusGetService(
+        var service = new FundStatusGetService(
             fakeGameApiClient);
 
-        var actual = await client
+        var actual = await service
             .GetAsync(
-               query)
-            .ConfigureAwait(false);
+            query,
+            Arg.Any<CancellationToken>());
 
         Assert.True(actual);
     }

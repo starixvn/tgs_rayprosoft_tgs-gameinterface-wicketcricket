@@ -18,13 +18,13 @@ public class PlayerCreateCommandServiceUnitTest
             PlayerCode: "4ue0ujotpmuu",
             Currency: 2);
 
-        var client = new PlayerCreateCommandService(
+        var service = new PlayerCreateCommandService(
             fakeGameApiClient);
 
-        await client
+        await service
             .ExecuteAsync(
-             command)
-            .ConfigureAwait(false);
+             command,
+             Arg.Any<CancellationToken>());
 
         _ = fakeGameApiClient
             .Received(1)

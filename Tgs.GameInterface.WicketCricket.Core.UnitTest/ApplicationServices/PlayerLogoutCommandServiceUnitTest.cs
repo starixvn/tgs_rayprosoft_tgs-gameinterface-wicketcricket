@@ -16,13 +16,13 @@ public class PlayerLogoutCommandServiceUnitTest
             Cert: "wkVwQ8sMVr252EA9",
             PlayerCode: "4ue0ujotpmuu");
 
-        var client = new PlayerLogoutCommandService(
+        var service = new PlayerLogoutCommandService(
             fakeGameApiClient);
 
-        await client
+        await service
             .ExecuteAsync(
-             command)
-            .ConfigureAwait(false);
+             command,
+              Arg.Any<CancellationToken>());
 
         _ = fakeGameApiClient
             .Received(1)

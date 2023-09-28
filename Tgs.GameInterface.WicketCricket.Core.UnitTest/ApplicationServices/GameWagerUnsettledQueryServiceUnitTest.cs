@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Nodes;
 using NSubstitute;
-using Tgs.GameInterface.WicketCricket.Common;
 using Tgs.GameInterface.WicketCricket.Core.ApplicationServices;
 using Tgs.GameInterface.WicketCricket.Core.Models;
 
@@ -80,14 +79,14 @@ public class GameWagerUnsettledQueryServiceUnitTest
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(resps.ToAsyncEnumerable());
 
-        var client = new GameWagerUnsettledQueryService(
+        var service = new GameWagerUnsettledQueryService(
             fakeGameApiClient);
 
-        var actual = await client
+        var actual = await service
             .QueryAsync(
-               query)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            query,
+            Arg.Any<CancellationToken>())
+            .ToArrayAsync();
 
         Assert.True(actual.Any());
         Assert.Equal("4ue0ujotpmuu", actual.ElementAt(0).PlayerCode);

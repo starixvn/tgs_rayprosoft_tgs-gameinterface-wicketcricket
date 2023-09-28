@@ -36,13 +36,13 @@ public class FundOutGetServiceUnitTest
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(result);
 
-        var client = new FundOutGetService(
+        var service = new FundOutGetService(
             fakeGameApiClient);
 
-        var actual = await client
+        var actual = await service
             .GetAsync(
-               query)
-            .ConfigureAwait(false);
+            query,
+            Arg.Any<CancellationToken>());
 
         Assert.NotNull(actual);
         Assert.Equal(result.Resp, actual.Resp);
