@@ -26,10 +26,10 @@ public class PlayerLogoutCommandServiceUnitTest
         _ = fakeGameApiClient
           .Received(1)
           .LogoutAsync(
-          exchangeApiUrl: Arg.Is(command.ExchangeApiUrl),
-          website: Arg.Is(command.Website),
-          cert: Arg.Is(command.Cert),
-          userId: Arg.Is(command.PlayerCode),
+          exchangeApiUrl: command.ExchangeApiUrl,
+          website: command.Website,
+          cert: command.Cert,
+          userId: command.PlayerCode,
           cancellationToken: Arg.Any<CancellationToken>());
     }
 }

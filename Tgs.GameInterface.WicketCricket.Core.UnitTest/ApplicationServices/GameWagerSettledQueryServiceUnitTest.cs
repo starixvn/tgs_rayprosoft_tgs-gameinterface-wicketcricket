@@ -81,13 +81,13 @@ public class GameWagerSettledQueryServiceUnitTest
         };
         _ = fakeGameApiClient
             .QuerySettleBetHistoryAsync(
-            apiUrl: Arg.Is(query.ApiUrl),
-            website: Arg.Is(query.Website),
-            cert: Arg.Is(query.Cert),
-            startTime: Arg.Is(query.StartTime),
-            endTime: Arg.Is(query.EndTime),
-            reportType: Arg.Is(query.ReportType),
-            pageNumber: Arg.Is(query.PageNumber),
+            apiUrl: query.ApiUrl,
+            website: query.Website,
+            cert: query.Cert,
+            startTime: query.StartTime,
+            endTime: query.EndTime,
+            reportType: query.ReportType,
+            pageNumber: query.PageNumber,
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(resps.ToAsyncEnumerable());
 
@@ -183,13 +183,13 @@ public class GameWagerSettledQueryServiceUnitTest
         };
         _ = fakeGameApiClient
             .QuerySettleBetHistoryAsync(
-            apiUrl: Arg.Is(query.ApiUrl),
-            website: Arg.Is(query.Website),
-            cert: Arg.Is(query.Cert),
-            startTime: Arg.Is(query.StartTime),
-            endTime: Arg.Is(query.EndTime),
-            reportType: Arg.Is(query.ReportType),
-            pageNumber: Arg.Is(query.PageNumber),
+            apiUrl: query.ApiUrl,
+            website: query.Website,
+            cert: query.Cert,
+            startTime: query.StartTime,
+            endTime: query.EndTime,
+            reportType: query.ReportType,
+            pageNumber: query.PageNumber,
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(resps.ToAsyncEnumerable());
 
