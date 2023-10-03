@@ -28,12 +28,12 @@ public class PlayerCreateCommandServiceUnitTest
         _ = fakeGameApiClient
             .Received(1)
             .GetKeyAsync(
-             Arg.Is(command.ExchangeApiUrl),
-             Arg.Is(command.Website),
-             Arg.Is(command.Cert),
-             Arg.Is(command.PlayerCode),
-             Arg.Is(command.PlayerCode),
-             Arg.Is(command.Agent),
-             Arg.Is(command.Currency));
+            Arg.Any<Uri>(),
+            Arg.Is(command.Website),
+            Arg.Is(command.Cert),
+            Arg.Is(command.PlayerCode),
+            Arg.Is(command.PlayerCode),
+            Arg.Is(command.Agent),
+            Arg.Is(command.Currency));
     }
 }

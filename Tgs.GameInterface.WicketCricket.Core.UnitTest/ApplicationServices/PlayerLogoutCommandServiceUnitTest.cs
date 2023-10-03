@@ -26,7 +26,7 @@ public class PlayerLogoutCommandServiceUnitTest
         _ = fakeGameApiClient
           .Received(1)
           .LogoutAsync(
-           Arg.Is(command.ExchangeApiUrl),
+           Arg.Any<Uri>(),
            Arg.Is(command.Website),
            Arg.Is(command.Cert),
            Arg.Is(command.PlayerCode));

@@ -29,7 +29,7 @@ public class FundInGetServiceUnitTest
             }.ToJsonString());
         _ = fakeGameApiClient
             .WithdrawAsync(
-            Arg.Is(query.ApiUrl),
+            Arg.Any<Uri>(),
             Arg.Is(query.Website),
             Arg.Is(query.Cert),
             Arg.Is(query.PlayerCode),

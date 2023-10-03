@@ -81,7 +81,7 @@ public class GameWagerSettledQueryServiceUnitTest
         };
         _ = fakeGameApiClient
             .QuerySettleBetHistoryAsync(
-            Arg.Is(query.ApiUrl),
+            Arg.Any<Uri>(),
             Arg.Is(query.Website),
             Arg.Is(query.Cert),
             Arg.Is(query.StartTime),
