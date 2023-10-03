@@ -34,6 +34,7 @@ public class PlayerCreateCommandServiceUnitTest
             userId: Arg.Is(command.PlayerCode),
             userName: Arg.Is(command.PlayerCode),
             agent: Arg.Is(command.Agent),
-            currency: Arg.Is(command.Currency));
+            currency: Arg.Is(command.Currency),
+            cancellationToken: Arg.Any<CancellationToken>());
     }
 }
