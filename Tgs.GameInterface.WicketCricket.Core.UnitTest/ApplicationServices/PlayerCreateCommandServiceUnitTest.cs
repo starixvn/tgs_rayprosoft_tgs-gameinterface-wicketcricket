@@ -25,7 +25,7 @@ public class PlayerCreateCommandServiceUnitTest
             .ExecuteAsync(
              command);
 
-        _ = fakeGameApiClient
+        _ = await fakeGameApiClient
             .Received(1)
             .GetKeyAsync(
             Arg.Is(command.ExchangeApiUrl),

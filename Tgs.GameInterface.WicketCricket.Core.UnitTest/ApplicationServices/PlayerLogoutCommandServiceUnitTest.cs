@@ -1,5 +1,4 @@
 ﻿using NSubstitute;
-using NSubstitute.Core;
 using Tgs.GameInterface.WicketCricket.Core.ApplicationServices;
 
 namespace Tgs.GameInterface.WicketCricket.Core.UnitTest.ApplicationServices;
@@ -24,13 +23,13 @@ public class PlayerLogoutCommandServiceUnitTest
             .ExecuteAsync(
              command);
 
-        _ = fakeGameApiClient
-          .Received(1)
-        .LogoutAsync(
-          Arg.Is(command.ExchangeApiUrl),
-           Arg.Is(command.Website),
-           Arg.Is(command.Cert),
-           Arg.Is(command.PlayerCode),
-           Arg.Any<CancellationToken>());
+        await fakeGameApiClient
+            .Received(1)
+            .LogoutAsync(
+            Arg.Is(command.ExchangeApiUrl),
+            Arg.Is(command.Website),
+            Arg.Is(command.Cert),
+            Arg.Is(command.PlayerCode),
+            Arg.Any<CancellationToken>());
     }
 }

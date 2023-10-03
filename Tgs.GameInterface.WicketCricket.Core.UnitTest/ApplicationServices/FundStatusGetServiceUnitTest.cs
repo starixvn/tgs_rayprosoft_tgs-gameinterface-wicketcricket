@@ -25,7 +25,7 @@ public class FundStatusGetServiceUnitTest
             Arg.Is(query.PlayerCode),
             Arg.Is(query.Txid),
             Arg.Any<CancellationToken>())
-            .Returns(ValueTask.FromResult(true));
+            .Returns(true);
 
         var service = new FundStatusGetService(
             fakeGameApiClient);
