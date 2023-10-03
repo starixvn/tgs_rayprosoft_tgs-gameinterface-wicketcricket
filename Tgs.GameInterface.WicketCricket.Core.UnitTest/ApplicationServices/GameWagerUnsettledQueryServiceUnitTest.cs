@@ -75,7 +75,8 @@ public class GameWagerUnsettledQueryServiceUnitTest
              cert: Arg.Is(query.Cert),
              lastUpdateTime: Arg.Is(query.LastUpdateTime),
              reportType: Arg.Is(query.ReportType),
-             pageNumber: Arg.Is(query.PageNumber))
+             pageNumber: Arg.Is(query.PageNumber),
+             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(resps.ToAsyncEnumerable());
 
         var service = new GameWagerUnsettledQueryService(

@@ -23,7 +23,8 @@ public class FundStatusGetServiceUnitTest
             website: Arg.Is(query.Website),
             cert: Arg.Is(query.Cert),
             userId: Arg.Is(query.PlayerCode),
-            tsCode: Arg.Is(query.Txid))
+            tsCode: Arg.Is(query.Txid),
+            cancellationToken: Arg.Any<CancellationToken>())
             .Returns(true);
 
         var service = new FundStatusGetService(
