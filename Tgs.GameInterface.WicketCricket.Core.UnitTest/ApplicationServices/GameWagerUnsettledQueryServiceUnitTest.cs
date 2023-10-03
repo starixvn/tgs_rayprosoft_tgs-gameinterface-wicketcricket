@@ -68,9 +68,14 @@ public class GameWagerUnsettledQueryServiceUnitTest
                     ["dateMatched"] = "2023-09-26T11:17:14.907+08:00"
                 }.ToJsonString())
         };
-        _ = fakeGameApiClient
-            .QueryCurrentBetsByLastUpdateDateAsync(
-            apiUrl: Arg.Is(query.ApiUrl), website: Arg.Is(query.Website), cert: Arg.Is(query.Cert), lastUpdateTime: Arg.Is(query.LastUpdateTime), reportType: Arg.Is(query.ReportType), pageNumber: Arg.Is(query.PageNumber), cancellationToken: Arg.Any<CancellationToken>())
+        _ = fakeGameApiClient.QueryCurrentBetsByLastUpdateDateAsync(
+            apiUrl: Arg.Is(query.ApiUrl),
+            website: Arg.Is(query.Website),
+            cert: Arg.Is(query.Cert),
+            lastUpdateTime: Arg.Is(query.LastUpdateTime),
+            reportType: Arg.Is(query.ReportType),
+            pageNumber: Arg.Is(query.PageNumber),
+            cancellationToken: Arg.Any<CancellationToken>())
             .Returns(resps.ToAsyncEnumerable());
 
         var service = new GameWagerUnsettledQueryService(

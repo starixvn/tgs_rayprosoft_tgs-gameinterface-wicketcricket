@@ -17,9 +17,13 @@ public class FundStatusGetServiceUnitTest
             PlayerCode: "4ue0ujotpmuu",
             Txid: "1695630056");
 
-        _ = fakeGameApiClient
-            .CheckTransferRecordAsync(
-            apiUrl: Arg.Is(query.ApiUrl), website: Arg.Is(query.Website), cert: Arg.Is(query.Cert), userId: Arg.Is(query.PlayerCode), tsCode: Arg.Is(query.Txid), cancellationToken: Arg.Any<CancellationToken>())
+        _ = fakeGameApiClient.CheckTransferRecordAsync(
+            apiUrl: Arg.Is(query.ApiUrl),
+            website: Arg.Is(query.Website),
+            cert: Arg.Is(query.Cert),
+            userId: Arg.Is(query.PlayerCode),
+            tsCode: Arg.Is(query.Txid),
+            cancellationToken: Arg.Any<CancellationToken>())
             .Returns(true);
 
         var service = new FundStatusGetService(

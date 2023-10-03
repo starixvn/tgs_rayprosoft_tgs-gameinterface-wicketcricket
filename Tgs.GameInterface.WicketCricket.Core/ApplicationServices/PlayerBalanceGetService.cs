@@ -15,7 +15,11 @@ internal class PlayerBalanceGetService : IGetService<PlayerBalanceQuery, PlayerB
     {
         var resp = await _client
             .GetBalanceAsync(
-            apiUrl: query.ApiUrl, website: query.Website, cert: query.Cert, userId: query.PlayerCode, cancellationToken: cancellationToken)
+            apiUrl: query.ApiUrl,
+            website: query.Website,
+            cert: query.Cert,
+            userId: query.PlayerCode,
+            cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 
         return new PlayerBalanceResult

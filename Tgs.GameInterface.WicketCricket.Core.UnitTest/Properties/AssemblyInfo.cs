@@ -1,0 +1,2 @@
+﻿
+[assembly: CollectionBehavior(CollectionBehavior.CollectionPerAssembly)]
