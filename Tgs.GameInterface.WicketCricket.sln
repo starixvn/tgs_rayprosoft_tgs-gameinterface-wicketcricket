@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GameInterface.WicketCri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GameInterface.WicketCricket.Client", "Tgs.GameInterface.WicketCricket.Client\Tgs.GameInterface.WicketCricket.Client.csproj", "{AE278AB8-5B7C-42A7-A6F6-B3B33265BA9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameInterface.WicketCricket.Core.UnitTest", "Tgs.GameInterface.WicketCricket.Core.UnitTest\Tgs.GameInterface.WicketCricket.Core.UnitTest.csproj", "{23A36E75-DED6-4C89-A511-784EE793593A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{AE278AB8-5B7C-42A7-A6F6-B3B33265BA9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE278AB8-5B7C-42A7-A6F6-B3B33265BA9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE278AB8-5B7C-42A7-A6F6-B3B33265BA9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23A36E75-DED6-4C89-A511-784EE793593A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A36E75-DED6-4C89-A511-784EE793593A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23A36E75-DED6-4C89-A511-784EE793593A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23A36E75-DED6-4C89-A511-784EE793593A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
