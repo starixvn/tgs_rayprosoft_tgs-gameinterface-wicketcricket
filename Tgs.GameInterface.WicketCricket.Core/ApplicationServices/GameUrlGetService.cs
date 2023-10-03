@@ -15,21 +15,21 @@ internal class GameUrlGetService : IGetService<GameUrlQuery, GameUrlReslut>
     {
         var key = await _client
             .GetKeyAsync(
-            exchangeApiUrl: query.ExchangeApiUrl,
-            website: query.Website,
-            cert: query.Cert,
-            userId: query.PlayerCode,
-            userName: query.PlayerCode,
-            agent: query.Agent,
-            currency: query.Currency,
+            query.ExchangeApiUrl,
+            query.Website,
+            query.Cert,
+            query.PlayerCode,
+            query.PlayerCode,
+            query.Agent,
+            query.Currency,
             cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 
         var gameUrl = await _client
             .LoginAsync(
-            exchangeApiUrl: query.ExchangeApiUrl,
-            website: query.Website,
-            userId: query.PlayerCode,
+            query.ExchangeApiUrl,
+            query.Website,
+            query.PlayerCode,
             key: key,
             eventType: 1,
             cancellationToken: cancellationToken)

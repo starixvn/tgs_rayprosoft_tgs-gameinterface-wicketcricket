@@ -14,10 +14,10 @@ internal class FundStatusGetService : IGetService<FundStatusQuery, bool>
     public ValueTask<bool> GetAsync(FundStatusQuery query, CancellationToken cancellationToken = default)
         => _client
         .CheckTransferRecordAsync(
-            apiUrl: query.ApiUrl,
-            website: query.Website,
-            cert: query.Cert,
-            userId: query.PlayerCode,
-            tsCode: query.Txid,
-            cancellationToken: cancellationToken);
+            query.ApiUrl,
+            query.Website,
+            query.Cert,
+            query.PlayerCode,
+            query.Txid,
+            cancellationToken);
 }

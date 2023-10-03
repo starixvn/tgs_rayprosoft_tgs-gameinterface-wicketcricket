@@ -14,9 +14,9 @@ internal class PlayerLogoutCommandService : ICommandService<PlayerLogoutCommand>
 
     public ValueTask ExecuteAsync(PlayerLogoutCommand command, CancellationToken cancellationToken = default)
         => _client.LogoutAsync(
-            exchangeApiUrl: command.ExchangeApiUrl,
-            website: command.Website,
-            cert: command.Cert,
-            userId: command.PlayerCode,
-            cancellationToken: cancellationToken);
+            command.ExchangeApiUrl,
+            command.Website,
+            command.Cert,
+            command.PlayerCode,
+            cancellationToken);
 }
