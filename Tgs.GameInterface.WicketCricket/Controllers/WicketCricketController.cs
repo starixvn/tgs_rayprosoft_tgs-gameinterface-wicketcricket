@@ -254,7 +254,7 @@ public class WicketCricketController : ControllerBase
     ///             "website": "WICKETSPRO",
     ///             "cert": "wkVwQ8sMVr252EA9",
     ///             "agent": "zf055gpi",
-    ///             "lastUpdateDate": "2023-09-26T00:00:00+08:00",
+    ///             "lastUpdateTime": "2023-09-26T00:00:00+08:00",
     ///             "reportType": 7,
     ///             "pageNumber": 1
     ///         }
