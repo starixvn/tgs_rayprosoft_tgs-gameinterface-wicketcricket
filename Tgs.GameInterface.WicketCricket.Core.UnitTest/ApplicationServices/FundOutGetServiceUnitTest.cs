@@ -27,13 +27,13 @@ public class FundOutGetServiceUnitTest
             }.ToJsonString());
         _ = fakeGameApiClient
             .DepositAsync(
-            apiUrl: Arg.Is(query.ApiUrl),
-            website: Arg.Is(query.Website),
-            cert: Arg.Is(query.Cert),
-            userId: Arg.Is(query.PlayerCode),
-            tsCode: Arg.Is(query.Txid),
-            amount: Arg.Is(query.Amount),
-            cancellationToken: Arg.Any<CancellationToken>())
+            Arg.Is(query.ApiUrl),
+            Arg.Is(query.Website),
+            Arg.Is(query.Cert),
+            Arg.Is(query.PlayerCode),
+            Arg.Is(query.Txid),
+            Arg.Is(query.Amount),
+            Arg.Any<CancellationToken>())
             .Returns(result);
 
         var service = new FundOutGetService(

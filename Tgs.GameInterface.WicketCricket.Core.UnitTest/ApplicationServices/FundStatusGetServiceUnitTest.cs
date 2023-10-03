@@ -19,12 +19,12 @@ public class FundStatusGetServiceUnitTest
 
         _ = fakeGameApiClient
             .CheckTransferRecordAsync(
-            apiUrl: Arg.Is(query.ApiUrl),
-            website: Arg.Is(query.Website),
-            cert: Arg.Is(query.Cert),
-            userId: Arg.Is(query.PlayerCode),
-            tsCode: Arg.Is(query.Txid),
-            cancellationToken: Arg.Any<CancellationToken>())
+            Arg.Is(query.ApiUrl),
+            Arg.Is(query.Website),
+            Arg.Is(query.Cert),
+            Arg.Is(query.PlayerCode),
+            Arg.Is(query.Txid),
+            Arg.Any<CancellationToken>())
             .Returns(ValueTask.FromResult(true));
 
         var service = new FundStatusGetService(
