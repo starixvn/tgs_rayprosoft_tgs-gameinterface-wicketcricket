@@ -14,7 +14,7 @@ internal class GameUrlGetService : IGetService<GameUrlQuery, GameUrlReslut>
     public async ValueTask<GameUrlReslut> GetAsync(GameUrlQuery query, CancellationToken cancellationToken = default)
     {
         var key = await _client
-        .GetKeyAsync(
+            .GetKeyAsync(
             exchangeApiUrl: query.ExchangeApiUrl,
             website: query.Website,
             cert: query.Cert,
@@ -23,7 +23,7 @@ internal class GameUrlGetService : IGetService<GameUrlQuery, GameUrlReslut>
             agent: query.Agent,
             currency: query.Currency,
             cancellationToken: cancellationToken)
-        .ConfigureAwait(false);
+            .ConfigureAwait(false);
 
         var gameUrl = await _client
             .LoginAsync(
