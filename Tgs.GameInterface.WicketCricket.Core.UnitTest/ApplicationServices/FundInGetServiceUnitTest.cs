@@ -28,7 +28,7 @@ public class FundInGetServiceUnitTest
                 ["remainingBalance"] = 0.000000m
             }.ToJsonString());
         _ = fakeGameApiClient.WithdrawAsync(
-            apiUrl: Arg.Is<Uri>(query.ApiUrl),
+            apiUrl: Arg.Is(query.ApiUrl),
             website: Arg.Is(query.Website),
             cert: Arg.Is(query.Cert),
             userId: Arg.Is(query.PlayerCode),

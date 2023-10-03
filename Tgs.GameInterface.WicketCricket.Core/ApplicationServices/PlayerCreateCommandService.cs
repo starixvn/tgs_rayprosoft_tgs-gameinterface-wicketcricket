@@ -15,7 +15,7 @@ internal class PlayerCreateCommandService : ICommandService<PlayerCreateCommand>
         => _ = await _client
         .GetKeyAsync(
             exchangeApiUrl: command.ExchangeApiUrl,
-            website: command.Website, 
+            website: command.Website,
             cert: command.Cert,
             userId: command.PlayerCode,
             userName: command.PlayerCode,

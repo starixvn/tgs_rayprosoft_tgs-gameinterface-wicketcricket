@@ -29,4 +29,12 @@
     <ProjectReference Include="..\Tgs.GameInterface.WicketCricket.Core\Tgs.GameInterface.WicketCricket.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\00.Git\game-wicketcricket\tgs-gameinterface-wicketcricket\Tgs.GameInterface.WicketCricket.Core.UnitTest\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="D:\00.Git\game-wicketcricket\tgs-gameinterface-wicketcricket\Tgs.GameInterface.WicketCricket.Core.UnitTest\.editorconfig" />
+  </ItemGroup>
+
 </Project>
