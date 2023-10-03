@@ -28,14 +28,14 @@ public class FundInGetServiceUnitTest
                 ["remainingBalance"] = 0.000000m
             }.ToJsonString());
         _ = fakeGameApiClient.WithdrawAsync(
-            apiUrl: Arg.Is(query.ApiUrl),
+            apiUrl: Arg.Is<Uri>(query.ApiUrl),
             website: Arg.Is(query.Website),
             cert: Arg.Is(query.Cert),
             userId: Arg.Is(query.PlayerCode),
             tsCode: Arg.Is(query.Txid),
             amount: Arg.Is(query.Amount),
             cancellationToken: Arg.Any<CancellationToken>())
-            .Returns(result);
+            .Returns(ValueTask.FromResult(result));
 
         var service = new FundInGetService(
             fakeGameApiClient);
