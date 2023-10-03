@@ -4,7 +4,6 @@ using System.Text;
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
-using NSubstitute;
 using RichardSzalay.MockHttp;
 using Tgs.GameInterface.WicketCricket.Common;
 
@@ -88,13 +87,8 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-            .WithContent(
-            await content
-            .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>()))
-            .Respond(
-            HttpStatusCode.OK,
-            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(await content.ReadAsStringAsync())
+            .Respond(HttpStatusCode.OK, new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -210,13 +204,8 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-            .WithContent(
-            await content
-            .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>()))
-            .Respond(
-            HttpStatusCode.OK,
-            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(await content.ReadAsStringAsync())
+            .Respond(HttpStatusCode.OK, new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -333,13 +322,8 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-            .WithContent(
-            await content
-            .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>()))
-            .Respond(
-            HttpStatusCode.OK,
-            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(await content.ReadAsStringAsync())
+            .Respond(HttpStatusCode.OK, new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -455,13 +439,8 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-            .WithContent(
-            await content
-            .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>()))
-            .Respond(
-            HttpStatusCode.OK,
-            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(await content.ReadAsStringAsync())
+            .Respond(HttpStatusCode.OK, new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -518,13 +497,8 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-            .WithContent(
-            await content
-            .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>()))
-            .Respond(
-            HttpStatusCode.OK,
-            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(await content.ReadAsStringAsync())
+            .Respond(HttpStatusCode.OK, new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
@@ -628,13 +602,8 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
         var handler = new MockHttpMessageHandler();
         _ = handler
             .Expect(HttpMethod.Post, url.ToString())
-            .WithContent(
-            await content
-            .ReadAsStringAsync(
-                cancellationToken: Arg.Any<CancellationToken>()))
-            .Respond(
-            HttpStatusCode.OK,
-            new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
+            .WithContent(await content.ReadAsStringAsync())
+            .Respond(HttpStatusCode.OK, new StringContent(response.ToJsonString(), Encoding.UTF8, MediaTypeNames.Application.Json));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
         var fakeOptions = Options.Create(new PolicySettingsOptions
