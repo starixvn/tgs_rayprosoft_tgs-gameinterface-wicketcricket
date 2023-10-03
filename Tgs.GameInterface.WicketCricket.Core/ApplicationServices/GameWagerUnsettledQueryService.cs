@@ -16,15 +16,15 @@ internal class GameWagerUnsettledQueryService : IQueryService<GameWagerUnsettled
     {
         var resps = await _client
             .QueryCurrentBetsByLastUpdateDateAsync(
-            query.ApiUrl,
-            query.Website,
-            query.Cert,
-            query.LastUpdateTime,
-            query.ReportType,
-            query.PageNumber,
-            cancellationToken)
+            apiUrl: query.ApiUrl,
+            website: query.Website,
+            cert: query.Cert,
+            lastUpdateTime: query.LastUpdateTime,
+            reportType: query.ReportType,
+            pageNumber: query.PageNumber,
+            cancellationToken: cancellationToken)
             .ToArrayAsync(
-            cancellationToken)
+            cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 
         if (!resps.Any())

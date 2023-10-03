@@ -16,16 +16,16 @@ internal class GameWagerSettledQueryService : IQueryService<GameWagerSettledQuer
     {
         var resps = await _client
             .QuerySettleBetHistoryAsync(
-            query.ApiUrl,
-            query.Website,
-            query.Cert,
-            query.StartTime,
-            query.EndTime,
-            query.ReportType,
-            query.PageNumber,
-            cancellationToken)
+            apiUrl: query.ApiUrl,
+            website: query.Website,
+            cert: query.Cert,
+            startTime: query.StartTime,
+            endTime: query.EndTime,
+            reportType: query.ReportType,
+            pageNumber: query.PageNumber,
+            cancellationToken: cancellationToken)
             .ToArrayAsync(
-            cancellationToken)
+            cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 
         if (!resps.Any())

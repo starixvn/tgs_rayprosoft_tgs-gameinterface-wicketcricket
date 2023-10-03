@@ -14,13 +14,13 @@ internal class PlayerCreateCommandService : ICommandService<PlayerCreateCommand>
     public async ValueTask ExecuteAsync(PlayerCreateCommand command, CancellationToken cancellationToken = default)
         => _ = await _client
         .GetKeyAsync(
-        command.ExchangeApiUrl,
-        command.Website,
-        command.Cert,
-        command.PlayerCode,
-        command.PlayerCode,
-        command.Agent,
-        command.Currency,
-        cancellationToken)
+        exchangeApiUrl: command.ExchangeApiUrl,
+        website: command.Website,
+        cert: command.Cert,
+        userId: command.PlayerCode,
+        userName: command.PlayerCode,
+        agent: command.Agent,
+        currency: command.Currency,
+        cancellationToken: cancellationToken)
         .ConfigureAwait(false);
 }
