@@ -29,7 +29,6 @@ public class PlayerLogoutCommandServiceUnitTest
            Arg.Is(command.ExchangeApiUrl),
            Arg.Is(command.Website),
            Arg.Is(command.Cert),
-           Arg.Is(command.PlayerCode),
-           Arg.Any<CancellationToken>());
+           Arg.Is(command.PlayerCode));
     }
 }

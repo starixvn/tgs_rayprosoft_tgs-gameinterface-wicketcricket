@@ -32,8 +32,7 @@ public class FundOutGetServiceUnitTest
             Arg.Is(query.Cert),
             Arg.Is(query.PlayerCode),
             Arg.Is(query.Txid),
-            Arg.Is(query.Amount),
-            Arg.Any<CancellationToken>())
+            Arg.Is(query.Amount))
             .Returns(result);
 
         var service = new FundOutGetService(

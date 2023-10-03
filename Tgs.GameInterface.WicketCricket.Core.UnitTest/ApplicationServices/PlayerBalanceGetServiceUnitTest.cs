@@ -26,8 +26,7 @@ public class PlayerBalanceGetServiceUnitTest
              Arg.Is(query.ApiUrl),
              Arg.Is(query.Website),
              Arg.Is(query.Cert),
-             Arg.Is(query.PlayerCode),
-             Arg.Any<CancellationToken>())
+             Arg.Is(query.PlayerCode))
             .Returns(result);
 
         var service = new PlayerBalanceGetService(

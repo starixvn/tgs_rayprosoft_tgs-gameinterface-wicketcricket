@@ -34,7 +34,6 @@ public class PlayerCreateCommandServiceUnitTest
              Arg.Is(command.PlayerCode),
              Arg.Is(command.PlayerCode),
              Arg.Is(command.Agent),
-             Arg.Is(command.Currency),
-             Arg.Any<CancellationToken>());
+             Arg.Is(command.Currency));
     }
 }
