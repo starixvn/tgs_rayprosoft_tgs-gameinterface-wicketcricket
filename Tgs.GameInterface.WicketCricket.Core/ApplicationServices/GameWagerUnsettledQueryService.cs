@@ -36,6 +36,7 @@ internal class GameWagerUnsettledQueryService : IQueryService<GameWagerUnsettled
         {
             yield return new GameWagerReslut(
                 PlayerCode: resp.UserId,
+                ExternalRoundId: resp.EventId.ToString(),
                 ExternalWagerId: $"{resp.CategoryType}_{resp.BetId}",
                 ExternalGameId: resp.EventType.ToString(),
                 IsClosed: false,

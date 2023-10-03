@@ -2,6 +2,7 @@
 
 public record GameWagerReslut(
     string PlayerCode,
+    string ExternalRoundId,
     string ExternalWagerId,
     string ExternalGameId,
     bool IsClosed,

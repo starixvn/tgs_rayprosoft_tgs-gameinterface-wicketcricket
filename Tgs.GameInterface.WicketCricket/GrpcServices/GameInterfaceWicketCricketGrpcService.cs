@@ -168,6 +168,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
                 reply.Items.Add(new GameWagerInfo
                 {
                     PlayerCode = reslut.PlayerCode,
+                    ExternalRoundId = reslut.ExternalRoundId,
                     ExternalWagerId = reslut.ExternalWagerId,
                     ExternalGameId = reslut.ExternalGameId,
                     IsClosed = reslut.IsClosed,
@@ -212,6 +213,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
                 reply.Items.Add(new GameWagerInfo
                 {
                     PlayerCode = reslut.PlayerCode,
+                    ExternalRoundId = reslut.ExternalRoundId,
                     ExternalWagerId = reslut.ExternalWagerId,
                     ExternalGameId = reslut.ExternalGameId,
                     IsClosed = reslut.IsClosed,

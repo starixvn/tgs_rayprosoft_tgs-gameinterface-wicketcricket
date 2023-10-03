@@ -223,6 +223,7 @@ public class WicketCricketController : ControllerBase
         {
             yield return new GameWagerResultViewModel(
                 PlayerCode: result.PlayerCode,
+                ExternalRoundId: result.ExternalRoundId,
                 ExternalWagerId: result.ExternalWagerId,
                 ExternalGameId: result.ExternalGameId,
                 IsClosed: result.IsClosed,
@@ -287,6 +288,7 @@ public class WicketCricketController : ControllerBase
         {
             yield return new GameWagerResultViewModel(
                 PlayerCode: result.PlayerCode,
+                ExternalRoundId: result.ExternalRoundId,
                 ExternalWagerId: result.ExternalWagerId,
                 ExternalGameId: result.ExternalGameId,
                 IsClosed: result.IsClosed,
