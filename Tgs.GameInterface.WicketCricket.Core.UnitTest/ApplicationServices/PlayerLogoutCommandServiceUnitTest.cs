@@ -23,7 +23,7 @@ public class PlayerLogoutCommandServiceUnitTest
             .ExecuteAsync(
              command);
 
-        await fakeGameApiClient
+        _ = fakeGameApiClient
             .Received(1)
             .LogoutAsync(
             exchangeApiUrl: Arg.Is(command.ExchangeApiUrl),
