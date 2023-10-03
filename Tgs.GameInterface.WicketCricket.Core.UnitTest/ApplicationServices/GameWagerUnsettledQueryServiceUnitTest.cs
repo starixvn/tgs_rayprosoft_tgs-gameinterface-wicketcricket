@@ -70,13 +70,7 @@ public class GameWagerUnsettledQueryServiceUnitTest
         };
         _ = fakeGameApiClient
             .QueryCurrentBetsByLastUpdateDateAsync(
-             apiUrl: Arg.Is(query.ApiUrl),
-             website: Arg.Is(query.Website),
-             cert: Arg.Is(query.Cert),
-             lastUpdateTime: Arg.Is(query.LastUpdateTime),
-             reportType: Arg.Is(query.ReportType),
-             pageNumber: Arg.Is(query.PageNumber),
-             cancellationToken: Arg.Any<CancellationToken>())
+            apiUrl: Arg.Is(query.ApiUrl), website: Arg.Is(query.Website), cert: Arg.Is(query.Cert), lastUpdateTime: Arg.Is(query.LastUpdateTime), reportType: Arg.Is(query.ReportType), pageNumber: Arg.Is(query.PageNumber), cancellationToken: Arg.Any<CancellationToken>())
             .Returns(resps.ToAsyncEnumerable());
 
         var service = new GameWagerUnsettledQueryService(
