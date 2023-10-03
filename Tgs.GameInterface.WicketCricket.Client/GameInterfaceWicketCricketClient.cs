@@ -1,4 +1,6 @@
-﻿using Tgs.GameInterface.WicketCricket.Protos;
+﻿using System.Runtime.CompilerServices;
+using Google.Protobuf.WellKnownTypes;
+using Tgs.GameInterface.WicketCricket.Protos;
 
 namespace Tgs.GameInterface.WicketCricket.Client;
 
@@ -82,9 +84,56 @@ public class GameInterfaceWicketCricketClient : IGameInterfaceWicketCricketClien
         .ConfigureAwait(false))
         .GameUrl;
 
-    public IAsyncEnumerable<GameWagerInfo> GameWagerSettledAsync(Uri apiUrl, string website, string cert, DateTimeOffset startTime, DateTimeOffset endTime, ReportTypes reportType, int pageNumber, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+    public async IAsyncEnumerable<GameWagerInfo> GameWagerSettledAsync(Uri apiUrl, string website, string cert, DateTimeOffset startTime, DateTimeOffset endTime, ReportTypes reportType, int pageNumber, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var reply = await _client.GameWagerSettledAsync(
+            request: new GameWagerSettledRequest
+            {
+                ApiUrl = apiUrl.ToString(),
+                Website = website,
+                Cert = cert,
+                StartTime = startTime.ToTimestamp(),
+                EndTime = endTime.ToTimestamp(),
+                ReportType = reportType,
+            },
+            cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
-    public IAsyncEnumerable<GameWagerInfo> GameWagerUnsettledAsync(Uri apiUrl, string website, string cert, DateTimeOffset lastUpdateTime, ReportTypes reportType, int pageNumber, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        if (!(reply.Items ?? Enumerable.Empty<GameWagerInfo>()).Any())
+        {
+            yield break;
+        }
+
+        foreach (var item in reply.Items ?? Enumerable.Empty<GameWagerInfo>())
+        {
+            yield return item;
+        }
+    }
+
+    public async IAsyncEnumerable<GameWagerInfo> GameWagerUnsettledAsync(Uri apiUrl, string website, string cert, DateTimeOffset lastUpdateTime, ReportTypes reportType, int pageNumber, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var reply = await _client.GameWagerUnsettledAsync(
+            request: new GameWagerUnsettledRequest
+            {
+                ApiUrl = apiUrl.ToString(),
+                Website = website,
+                Cert = cert,
+                LastUpdateTime = lastUpdateTime.ToTimestamp(),
+                ReportType = reportType,
+            },
+            cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        if (!(reply.Items ?? Enumerable.Empty<GameWagerInfo>()).Any())
+        {
+            yield break;
+        }
+
+        foreach (var item in reply.Items ?? Enumerable.Empty<GameWagerInfo>())
+        {
+            yield return item;
+        }
+    }
 
     public async ValueTask<PlayerBalanceReply> PlayerBalanceAsync(Uri apiUrl, string website, string cert, string playerCode, CancellationToken cancellationToken = default)
         => await _client.PlayerBalanceAsync(
