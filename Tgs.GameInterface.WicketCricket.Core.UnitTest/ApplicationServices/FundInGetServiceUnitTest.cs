@@ -34,7 +34,8 @@ public class FundInGetServiceUnitTest
             Arg.Is(query.Cert),
             Arg.Is(query.PlayerCode),
             Arg.Is(query.Txid),
-            Arg.Is(query.Amount))
+            Arg.Is(query.Amount),
+            Arg.Any<CancellationToken>())
             .Returns(result);
 
         var service = new FundInGetService(
