@@ -70,7 +70,7 @@ public class GameWagerUnsettledQueryServiceUnitTest
         };
         _ = fakeGameApiClient
             .QueryCurrentBetsByLastUpdateDateAsync(
-             Arg.Any<Uri>(),
+             Arg.Is(query.ApiUrl),
              Arg.Is(query.Website),
              Arg.Is(query.Cert),
              Arg.Is(query.LastUpdateTime),

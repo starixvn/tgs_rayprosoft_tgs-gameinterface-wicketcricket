@@ -27,7 +27,7 @@ public class FundOutGetServiceUnitTest
             }.ToJsonString());
         _ = fakeGameApiClient
             .DepositAsync(
-            Arg.Any<Uri>(),
+            Arg.Is(query.ApiUrl),
             Arg.Is(query.Website),
             Arg.Is(query.Cert),
             Arg.Is(query.PlayerCode),

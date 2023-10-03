@@ -19,7 +19,7 @@ public class FundStatusGetServiceUnitTest
 
         _ = fakeGameApiClient
             .CheckTransferRecordAsync(
-            Arg.Any<Uri>(),
+            Arg.Is(query.ApiUrl),
             Arg.Is(query.Website),
             Arg.Is(query.Cert),
             Arg.Is(query.PlayerCode),
