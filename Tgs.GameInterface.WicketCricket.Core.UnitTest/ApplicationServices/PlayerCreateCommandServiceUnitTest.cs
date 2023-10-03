@@ -28,13 +28,13 @@ public class PlayerCreateCommandServiceUnitTest
         _ = fakeGameApiClient
             .Received(1)
             .GetKeyAsync(
-            exchangeApiUrl: command.ExchangeApiUrl,
-            website: command.Website,
-            cert: command.Cert,
-            userId: command.PlayerCode,
-            userName: command.PlayerCode,
-            agent: command.Agent,
-            currency: command.Currency,
+            exchangeApiUrl: Arg.Is(command.ExchangeApiUrl),
+            website: Arg.Is(command.Website),
+            cert: Arg.Is(command.Cert),
+            userId: Arg.Is(command.PlayerCode),
+            userName: Arg.Is(command.PlayerCode),
+            agent: Arg.Is(command.Agent),
+            currency: Arg.Is(command.Currency),
             cancellationToken: Arg.Any<CancellationToken>());
     }
 }
