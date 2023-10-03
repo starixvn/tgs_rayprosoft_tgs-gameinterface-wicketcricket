@@ -8,7 +8,7 @@ namespace Tgs.GameInterface.WicketCricket.Core.UnitTest.ApplicationServices;
 public class GameWagerUnsettledQueryServiceUnitTest
 {
     [Fact]
-    public async Task Normal_Process()
+    public async Task GameWagerUnsettled_Normal_Process()
     {
         var fakeGameApiClient = Substitute.For<IGameApiClient>();
 
