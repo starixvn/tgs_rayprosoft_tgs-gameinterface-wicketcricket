@@ -3,7 +3,7 @@ using Tgs.GameInterface.WicketCricket.Core.Models;
 
 namespace Tgs.GameInterface.WicketCricket.Core;
 
-interface IGameApiClient
+public interface IGameApiClient
 {
     ValueTask<bool> CheckTransferRecordAsync(
        Uri apiUrl,
