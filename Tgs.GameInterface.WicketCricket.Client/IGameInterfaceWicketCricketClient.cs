@@ -35,6 +35,7 @@ public interface IGameInterfaceWicketCricketClient
         CancellationToken cancellationToken = default);
 
     ValueTask<string> GameUrlAsync(
+        Uri apiUrl,
         Uri exchangeApiUrl,
         string website,
         string cert,
@@ -70,7 +71,7 @@ public interface IGameInterfaceWicketCricketClient
         CancellationToken cancellationToken = default);
 
     ValueTask PlayerCreateAsync(
-        Uri exchangeApiUrl,
+        Uri apiUrl,
         string website,
         string cert,
         string agent,

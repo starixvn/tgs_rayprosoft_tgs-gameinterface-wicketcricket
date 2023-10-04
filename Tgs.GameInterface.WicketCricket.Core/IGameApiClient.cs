@@ -36,7 +36,7 @@ public interface IGameApiClient
        CancellationToken cancellationToken = default);
 
     ValueTask<string> GetKeyAsync(
-       Uri exchangeApiUrl,
+       Uri apiUrl,
        string website,
        string cert,
        string userId,

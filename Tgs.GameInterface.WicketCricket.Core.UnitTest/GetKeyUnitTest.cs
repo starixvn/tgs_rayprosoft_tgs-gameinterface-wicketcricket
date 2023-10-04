@@ -15,7 +15,7 @@ public class GetKeyUnitTest
     [Fact]
     public async Task Normal_Process()
     {
-        var apiUrl = new Uri("https://test81.cckk77.net/");
+        var apiUrl = new Uri("https://apiinfo.cckk77.net/");
         var website = "WICKETSPRO";
         var cert = "wkVwQ8sMVr252EA9";
         var userId = "4ue0ujotpmuu";
@@ -23,7 +23,7 @@ public class GetKeyUnitTest
         var agent = "testpginrma";
         var currency = 2;
 
-        var url = new Uri(apiUrl, $"/apiWallet/player/{website}/getKey");
+        var url = new Uri(apiUrl, $"/api/apiWallet/{website}/getKey");
         var parameters = new Dictionary<string, string>
         {
             ["cert"] = cert,
@@ -59,7 +59,7 @@ public class GetKeyUnitTest
 
         var actual = await client
             .GetKeyAsync(
-            exchangeApiUrl: apiUrl,
+            apiUrl: apiUrl,
             website: website,
             cert: cert,
             userId: userId,
@@ -81,7 +81,7 @@ public class GetKeyUnitTest
         var agent = "testpginrma";
         var currency = 2;
 
-        var url = new Uri(apiUrl, $"/apiWallet/player/{website}/getKey");
+        var url = new Uri(apiUrl, $"/api/apiWallet/{website}/getKey");
         var parameters = new Dictionary<string, string>
         {
             ["cert"] = cert,
@@ -117,7 +117,7 @@ public class GetKeyUnitTest
         _ = await Assert
             .ThrowsAsync<HttpRequestException>(() => client
             .GetKeyAsync(
-                exchangeApiUrl: apiUrl,
+                apiUrl: apiUrl,
                 website: website,
                 cert: cert,
                 userId: userId,

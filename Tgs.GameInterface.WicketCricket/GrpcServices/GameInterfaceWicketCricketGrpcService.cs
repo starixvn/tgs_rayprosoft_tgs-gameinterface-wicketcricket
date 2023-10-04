@@ -121,6 +121,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
     public override async Task<GameUrlReply> GameUrl(GameUrlRequest request, ServerCallContext context)
     {
         var query = new GameUrlQuery(
+            ApiUrl: new Uri(request.ApiUrl),
             ExchangeApiUrl: new Uri(request.ExchangeApiUrl),
             Website: request.Website,
             Cert: request.Cert,
@@ -257,7 +258,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
     public override async Task<BaseReply> PlayerCreate(PlayerCreateRequest request, ServerCallContext context)
     {
         var command = new PlayerCreateCommand(
-            ExchangeApiUrl: new Uri(request.ExchangeApiUrl),
+            ApiUrl: new Uri(request.ApiUrl),
             Website: request.Website,
             Cert: request.Cert,
             Agent: request.Agent,

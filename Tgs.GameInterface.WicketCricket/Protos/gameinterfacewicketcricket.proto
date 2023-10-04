@@ -31,7 +31,7 @@ message PlayerBalanceRequest {
 }
 
 message PlayerCreateRequest {
-    string exchange_api_url = 1;
+    string api_url = 1;
 	string website = 2;
 	string cert = 3;
 	string agent = 4;
@@ -64,12 +64,13 @@ message FundStatusRequest {
 }
 
 message GameUrlRequest {
-    string exchange_api_url = 1;
-	string website = 2;
-	string cert = 3;
-	string agent = 4;
-    string player_code = 5;
-	int32 currency = 6;
+	string api_url = 1;
+    string exchange_api_url = 2;
+	string website = 3;
+	string cert = 4;
+	string agent = 5;
+    string player_code = 6;
+	int32 currency = 7;
 }
 
 message GameWagerSettledRequest {

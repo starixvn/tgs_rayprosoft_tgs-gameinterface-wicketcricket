@@ -15,7 +15,7 @@ internal class GameUrlGetService : IGetService<GameUrlQuery, GameUrlReslut>
     {
         var key = await _client
             .GetKeyAsync(
-            exchangeApiUrl: query.ExchangeApiUrl,
+            apiUrl: query.ApiUrl,
             website: query.Website,
             cert: query.Cert,
             userId: query.PlayerCode,

@@ -1,7 +1,7 @@
 ﻿namespace Tgs.GameInterface.WicketCricket.Core.ApplicationServices;
 
 public record PlayerCreateCommand(
-    Uri ExchangeApiUrl,
+    Uri ApiUrl,
     string Website,
     string Cert,
     string Agent,

@@ -5,7 +5,7 @@ namespace Tgs.GameInterface.WicketCricket.ViewModels;
 public record PlayerCreateViewModel
 {
     [Required]
-    public Uri ExchangeApiUrl { get; init; } = default!;
+    public Uri ApiUrl { get; init; } = default!;
     [Required]
     public string Website { get; init; } = default!;
     [Required]

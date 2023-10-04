@@ -69,10 +69,11 @@ public class GameInterfaceWicketCricketClient : IGameInterfaceWicketCricketClien
         .ConfigureAwait(false))
         .Status;
 
-    public async ValueTask<string> GameUrlAsync(Uri exchangeApiUrl, string website, string cert, string agent, string playerCode, int currency, CancellationToken cancellationToken = default)
+    public async ValueTask<string> GameUrlAsync(Uri apiUrl, Uri exchangeApiUrl, string website, string cert, string agent, string playerCode, int currency, CancellationToken cancellationToken = default)
         => (await _client.GameUrlAsync(
             request: new GameUrlRequest
             {
+                ApiUrl = apiUrl.ToString(),
                 ExchangeApiUrl = exchangeApiUrl.ToString(),
                 Website = website,
                 Cert = cert,
@@ -147,11 +148,11 @@ public class GameInterfaceWicketCricketClient : IGameInterfaceWicketCricketClien
             cancellationToken: cancellationToken)
         .ConfigureAwait(false);
 
-    public async ValueTask PlayerCreateAsync(Uri exchangeApiUrl, string website, string cert, string agent, string playerCode, int currency, CancellationToken cancellationToken = default)
+    public async ValueTask PlayerCreateAsync(Uri apiUrl, string website, string cert, string agent, string playerCode, int currency, CancellationToken cancellationToken = default)
         => _ = await _client.PlayerCreateAsync(
             request: new PlayerCreateRequest
             {
-                ExchangeApiUrl = exchangeApiUrl.ToString(),
+                ApiUrl = apiUrl.ToString(),
                 Website = website,
                 Cert = cert,
                 Agent = agent,

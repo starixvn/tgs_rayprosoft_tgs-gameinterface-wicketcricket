@@ -140,6 +140,7 @@ public class WicketCricketController : ControllerBase
     ///     Post
     ///
     ///         {
+    ///             "apiUrl": "https://apiinfo.cckk77.net/",
     ///             "exchangeApiUrl": "https://test81.cckk77.net/",
     ///             "website": "WICKETSPRO",
     ///             "cert": "wkVwQ8sMVr252EA9",
@@ -154,6 +155,7 @@ public class WicketCricketController : ControllerBase
         GameUrlViewModel source)
     {
         var query = new GameUrlQuery(
+            ApiUrl: source.ApiUrl,
             ExchangeApiUrl: source.ExchangeApiUrl,
             Website: source.Website,
             Cert: source.Cert,
@@ -357,7 +359,7 @@ public class WicketCricketController : ControllerBase
     ///     Post
     ///
     ///         {
-    ///             "exchangeApiUrl": "https://test81.cckk77.net/",
+    ///             "apiUrl": "https://apiinfo.cckk77.net/",
     ///             "website": "WICKETSPRO",
     ///             "cert": "wkVwQ8sMVr252EA9",
     ///             "agent": "testpginrma",
@@ -372,7 +374,7 @@ public class WicketCricketController : ControllerBase
         => service
         .ExecuteAsync(
             command: new PlayerCreateCommand(
-                ExchangeApiUrl: source.ExchangeApiUrl,
+                ApiUrl: source.ApiUrl,
                 Website: source.Website,
                 Cert: source.Cert,
                 Agent: source.Agent,

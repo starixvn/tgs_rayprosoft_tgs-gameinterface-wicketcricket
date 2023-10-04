@@ -172,9 +172,9 @@ internal class GameApiClient : IGameApiClient
         }
     }
 
-    public async ValueTask<string> GetKeyAsync(Uri exchangeApiUrl, string website, string cert, string userId, string userName, string agent, int currency, CancellationToken cancellationToken = default)
+    public async ValueTask<string> GetKeyAsync(Uri apiUrl, string website, string cert, string userId, string userName, string agent, int currency, CancellationToken cancellationToken = default)
     {
-        var url = new Uri(exchangeApiUrl, $"/apiWallet/player/{website}/getKey");
+        var url = new Uri(apiUrl, $"/api/apiWallet/{website}/getKey");
         var parameters = new Dictionary<string, string>
         {
             ["cert"] = cert,

@@ -11,7 +11,7 @@ public class PlayerCreateCommandServiceUnitTest
         var fakeGameApiClient = Substitute.For<IGameApiClient>();
 
         var command = new PlayerCreateCommand(
-            ExchangeApiUrl: new Uri("https://test81.cckk77.net/"),
+            ApiUrl: new Uri("https://apiinfo.cckk77.net/"),
             Website: "WICKETSPRO",
             Cert: "wkVwQ8sMVr252EA9",
             Agent: "testpginrma",
@@ -28,7 +28,7 @@ public class PlayerCreateCommandServiceUnitTest
         _ = await fakeGameApiClient
             .Received(1)
             .GetKeyAsync(
-            exchangeApiUrl: Arg.Is(command.ExchangeApiUrl),
+            apiUrl: Arg.Is(command.ApiUrl),
             website: Arg.Is(command.Website),
             cert: Arg.Is(command.Cert),
             userId: Arg.Is(command.PlayerCode),
