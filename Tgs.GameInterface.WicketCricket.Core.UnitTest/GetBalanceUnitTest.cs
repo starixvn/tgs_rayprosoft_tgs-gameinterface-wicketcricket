@@ -229,9 +229,8 @@ public class GetBalanceUnitTest
             fakeOptions,
             fakeHttpClient);
 
-        _ = await Assert
-            .ThrowsAsync<HttpRequestException>(() => client
-            .GetBalanceAsync(
+        _ = await Assert.ThrowsAsync<MockHttpMatchException>(
+            () => client.GetBalanceAsync(
                 apiUrl: apiUrl,
                 website: website,
                 cert: cert,

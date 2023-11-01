@@ -514,8 +514,8 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
             fakeHttpClient);
 
         _ = await Assert
-            .ThrowsAsync<HttpRequestException>(() => client
-            .QueryCurrentBetsByLastUpdateDateAsync(
+            .ThrowsAsync<MockHttpMatchException>(
+            () => client.QueryCurrentBetsByLastUpdateDateAsync(
                 apiUrl: apiUrl,
                 website: website,
                 cert: cert,

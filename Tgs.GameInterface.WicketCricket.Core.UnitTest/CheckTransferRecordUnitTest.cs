@@ -58,9 +58,8 @@ public class CheckTransferRecordUnitTest
             fakeOptions,
             fakeHttpClient);
 
-        _ = await Assert
-            .ThrowsAsync<HttpRequestException>(() => client
-            .CheckTransferRecordAsync(
+        _ = await Assert.ThrowsAsync<MockHttpMatchException>(
+            () => client.CheckTransferRecordAsync(
                 apiUrl: apiUrl,
                 website: website,
                 cert: cert,

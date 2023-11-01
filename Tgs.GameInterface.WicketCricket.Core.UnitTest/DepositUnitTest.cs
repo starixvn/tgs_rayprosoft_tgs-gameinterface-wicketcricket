@@ -114,9 +114,8 @@ public class DepositUnitTest
             fakeOptions,
             fakeHttpClient);
 
-        _ = await Assert
-            .ThrowsAsync<HttpRequestException>(() => client
-            .DepositAsync(
+        _ = await Assert.ThrowsAsync<MockHttpMatchException>
+            (() => client.DepositAsync(
                 apiUrl: apiUrl,
                 website: website,
                 cert: cert,

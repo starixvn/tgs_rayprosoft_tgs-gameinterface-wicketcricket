@@ -94,9 +94,8 @@ public class LogoutAllUnitTest
             fakeOptions,
             fakeHttpClient);
 
-        _ = await Assert
-            .ThrowsAsync<HttpRequestException>(() => client
-            .LogoutAllAsync(
+        _ = await Assert.ThrowsAsync<MockHttpMatchException>(
+            () => client.LogoutAllAsync(
                 exchangeApiUrl: apiUrl,
                 website: website,
                 cert: cert,

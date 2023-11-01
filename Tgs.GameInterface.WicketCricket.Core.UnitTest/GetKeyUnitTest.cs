@@ -114,9 +114,8 @@ public class GetKeyUnitTest
             fakeOptions,
             fakeHttpClient);
 
-        _ = await Assert
-            .ThrowsAsync<HttpRequestException>(() => client
-            .GetKeyAsync(
+        _ = await Assert.ThrowsAsync<MockHttpMatchException>(
+            () => client.GetKeyAsync(
                 apiUrl: apiUrl,
                 website: website,
                 cert: cert,

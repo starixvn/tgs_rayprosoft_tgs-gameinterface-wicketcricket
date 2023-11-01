@@ -636,8 +636,8 @@ public class QuerySettleBetHistoryUnitTest
             fakeHttpClient);
 
         _ = await Assert
-            .ThrowsAsync<HttpRequestException>(() => client
-            .QuerySettleBetHistoryAsync(
+            .ThrowsAsync<MockHttpMatchException>(
+            () => client.QuerySettleBetHistoryAsync(
                 apiUrl: apiUrl,
                 website: website,
                 cert: cert,

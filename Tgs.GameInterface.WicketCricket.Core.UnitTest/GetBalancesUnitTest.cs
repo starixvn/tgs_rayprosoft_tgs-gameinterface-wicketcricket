@@ -171,9 +171,8 @@ public class GetBalancesUnitTest
             fakeOptions,
             fakeHttpClient);
 
-        _ = await Assert
-            .ThrowsAsync<HttpRequestException>(() => client
-            .GetBalancesAsync(
+        _ = await Assert.ThrowsAsync<MockHttpMatchException>(
+            () => client.GetBalancesAsync(
                 apiUrl: apiUrl,
                 website: website,
                 cert: cert)
