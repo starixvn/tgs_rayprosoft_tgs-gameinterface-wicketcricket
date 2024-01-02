@@ -113,7 +113,7 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
             pageNumber: pageNumber)
             .ToArrayAsync();
 
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal(-10020074, actual.ElementAt(0).EventId);
         Assert.Equal(4, actual.ElementAt(0).EventType);
         Assert.Equal(2, actual.ElementAt(0).CurrencyType);
@@ -230,7 +230,7 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
             pageNumber: pageNumber)
             .ToArrayAsync();
 
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal(32649630, actual.ElementAt(0).EventId);
         Assert.Equal(4, actual.ElementAt(0).EventType);
         Assert.Equal(2, actual.ElementAt(0).CurrencyType);
@@ -348,7 +348,7 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
             pageNumber: pageNumber)
             .ToArrayAsync();
 
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal(-10020389, actual.ElementAt(0).EventId);
         Assert.Equal(4, actual.ElementAt(0).EventType);
         Assert.Equal(2, actual.ElementAt(0).CurrencyType);
@@ -465,7 +465,7 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
             pageNumber: pageNumber)
             .ToArrayAsync();
 
-        Assert.False(actual.Any());
+        Assert.Empty(actual);
     }
 
     [Fact]
@@ -628,7 +628,7 @@ public class QueryCurrentBetsByLastUpdateDateUnitTest
             pageNumber: pageNumber)
             .ToArrayAsync();
 
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal(-10020371, actual.ElementAt(0).EventId);
         Assert.Equal(4, actual.ElementAt(0).EventType);
         Assert.Equal(2, actual.ElementAt(0).CurrencyType);

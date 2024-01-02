@@ -2,18 +2,11 @@
 
 namespace Tgs.GameInterface.WicketCricket.Core.ApplicationServices;
 
-internal class GameUrlGetService : IGetService<GameUrlQuery, GameUrlReslut>
+internal class GameUrlGetService(IGameApiClient client) : IGetService<GameUrlQuery, GameUrlReslut>
 {
-    private readonly IGameApiClient _client;
-
-    public GameUrlGetService(IGameApiClient client)
-    {
-        _client = client ?? throw new ArgumentNullException(nameof(client));
-    }
-
     public async ValueTask<GameUrlReslut> GetAsync(GameUrlQuery query, CancellationToken cancellationToken = default)
     {
-        var key = await _client
+        var key = await client
             .GetKeyAsync(
             apiUrl: query.ApiUrl,
             website: query.Website,
@@ -25,7 +18,7 @@ internal class GameUrlGetService : IGetService<GameUrlQuery, GameUrlReslut>
             cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 
-        var gameUrl = await _client
+        var gameUrl = await client
             .LoginAsync(
             exchangeApiUrl: query.ExchangeApiUrl,
             website: query.Website,

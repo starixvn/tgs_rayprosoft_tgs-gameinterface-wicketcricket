@@ -14,21 +14,12 @@ using Tgs.GameInterface.WicketCricket.Core.Models;
 
 namespace Tgs.GameInterface.WicketCricket.Core;
 
-internal class GameApiClient : IGameApiClient
+internal class GameApiClient(
+    ILogger<GameApiClient> logger,
+    IOptions<PolicySettingsOptions> options,
+    HttpClient client) : IGameApiClient
 {
-    private readonly HttpClient _client;
-    private readonly ILogger<GameApiClient> _logger;
-    private readonly PolicySettingsOptions _policySettings;
-
-    public GameApiClient(
-        ILogger<GameApiClient> logger,
-        IOptions<PolicySettingsOptions> options,
-        HttpClient client)
-    {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _policySettings = options.Value;
-        _client = client ?? throw new ArgumentNullException(nameof(client));
-    }
+    private readonly PolicySettingsOptions _policySettings = options.Value;
 
     public async ValueTask<bool> CheckTransferRecordAsync(Uri apiUrl, string website, string cert, string userId, string tsCode, CancellationToken cancellationToken = default)
     {
@@ -153,7 +144,7 @@ internal class GameApiClient : IGameApiClient
 
         var results = jsonNode["results"]!.AsArray();
 
-        if (!results.Any())
+        if (results.Count == 0)
         {
             yield break;
         }
@@ -293,7 +284,7 @@ internal class GameApiClient : IGameApiClient
 
         var resultList = jsonNode["matched"]!["resultList"]!.AsArray()!;
 
-        if (!resultList.Any())
+        if (resultList.Count == 0)
         {
             yield break;
         }
@@ -357,7 +348,7 @@ internal class GameApiClient : IGameApiClient
 
         var resultList = jsonNode["resultList"]!.AsArray()!;
 
-        if (!resultList.Any())
+        if (resultList.Count == 0)
         {
             yield break;
         }
@@ -423,7 +414,7 @@ internal class GameApiClient : IGameApiClient
             sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(retryWaitSec),
             onRetry: (result, retryTime, context) =>
             {
-                _logger.LogWarning("LogOn:{logOn}  Parameter:{parameters} Result:{result} Delay:{retryTime}",
+                logger.LogWarning("LogOn:{logOn}  Parameter:{parameters} Result:{result} Delay:{retryTime}",
                     DateTime.Now.ToString("o"),
                     parameters,
                     result,
@@ -447,7 +438,7 @@ internal class GameApiClient : IGameApiClient
         var sw = Stopwatch.StartNew();
 
         var content = new FormUrlEncodedContent(parameters);
-        var httpResponseMessage = await _client
+        var httpResponseMessage = await client
             .PostAsync(
             requestUri: apiUrl,
             content: content,
@@ -477,7 +468,7 @@ internal class GameApiClient : IGameApiClient
             ExecutionTimeMs = (int)sw.ElapsedMilliseconds,
             RecordedOn = DateTimeOffset.UtcNow
         };
-        _logger.LogInformation("{apiLogEvent}", JsonSerializer.Serialize(apiLogEvent));
+        logger.LogInformation("{apiLogEvent}", JsonSerializer.Serialize(apiLogEvent));
 
         _ = httpResponseMessage.EnsureSuccessStatusCode();
 

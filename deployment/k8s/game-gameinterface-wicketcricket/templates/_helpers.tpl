@@ -47,7 +47,6 @@ Selector labels
 */}}
 {{- define "game-gameinterface-wicketcricket.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "game-gameinterface-wicketcricket.name" . }}
-app.kubernetes.io/instance: RELEASE-NAME
 app: {{ include "game-gameinterface-wicketcricket.name" . }}
 tgs.kind: game
 tgs.game.kind: gameinterface

@@ -67,7 +67,7 @@ public class GetBalancesUnitTest
             cert: cert)
             .ToArrayAsync();
 
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal("4ue0ujotpmuu", actual.ElementAt(0).UserId);
         Assert.Equal(0.0m, actual.ElementAt(0).Balance);
         Assert.Equal(0.0m, actual.ElementAt(0).Exposure);
@@ -128,7 +128,7 @@ public class GetBalancesUnitTest
             cert: cert)
             .ToArrayAsync();
 
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal("4ue0ujotpmuu", actual.ElementAt(0).UserId);
         Assert.Equal(8060.00m, actual.ElementAt(0).Balance);
         Assert.Equal(1940.00m, actual.ElementAt(0).Exposure);

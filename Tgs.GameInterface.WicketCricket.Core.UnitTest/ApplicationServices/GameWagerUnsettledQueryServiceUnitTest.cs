@@ -21,7 +21,7 @@ public class GameWagerUnsettledQueryServiceUnitTest
             PageNumber: 1);
 
         var resps = new BetTransferUnsettledResp[] {
-            new BetTransferUnsettledResp(
+            new(
                 EventId: 32649630,
                 EventType: 4,
                 CurrencyType: 2,
@@ -86,7 +86,7 @@ public class GameWagerUnsettledQueryServiceUnitTest
             query)
             .ToArrayAsync();
 
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal("4ue0ujotpmuu", actual.ElementAt(0).PlayerCode);
         Assert.Equal("32649630", actual.ElementAt(0).ExternalRoundId);
         Assert.Equal("1_120848867", actual.ElementAt(0).ExternalWagerId);

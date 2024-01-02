@@ -6,46 +6,21 @@ using Tgs.ServiceUtility;
 
 namespace Tgs.GameInterface.WicketCricket.GrpcServices;
 
-public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.GameInterfaceWicketCricketBase
+public class GameInterfaceWicketCricketGrpcService(
+    ILogger<GameInterfaceWicketCricketGrpcService> logger,
+    IGetService<FundInQuery, FundResult> fundInService,
+    IGetService<FundOutQuery, FundResult> fundOutService,
+    IGetService<FundStatusQuery, bool> fundStatusService,
+    IGetService<GameUrlQuery, GameUrlReslut> gameUrlService,
+    IQueryService<GameWagerSettledQuery, GameWagerReslut> gameWagerSettledService,
+    IQueryService<GameWagerUnsettledQuery, GameWagerReslut> gameWagerUnsettledService,
+    IGetService<PlayerBalanceQuery, PlayerBalanceResult> playerBalanceService,
+    ICommandService<PlayerCreateCommand> playerCreateService,
+    ICommandService<PlayerLogoutCommand> playerLogoutService) : GameInterfaceWicketCricket.GameInterfaceWicketCricketBase
 {
-    private readonly IGetService<FundInQuery, FundResult> _fundInService;
-    private readonly IGetService<FundOutQuery, FundResult> _fundOutService;
-    private readonly IGetService<FundStatusQuery, bool> _fundStatusService;
-    private readonly IGetService<GameUrlQuery, GameUrlReslut> _gameUrlService;
-    private readonly IQueryService<GameWagerSettledQuery, GameWagerReslut> _gameWagerSettledService;
-    private readonly IQueryService<GameWagerUnsettledQuery, GameWagerReslut> _gameWagerUnsettledService;
-    private readonly ILogger<GameInterfaceWicketCricketGrpcService> _logger;
-    private readonly IGetService<PlayerBalanceQuery, PlayerBalanceResult> _playerBalanceService;
-    private readonly ICommandService<PlayerCreateCommand> _playerCreateService;
-    private readonly ICommandService<PlayerLogoutCommand> _playerLogoutService;
-
-    public GameInterfaceWicketCricketGrpcService(
-        ILogger<GameInterfaceWicketCricketGrpcService> logger,
-        IGetService<FundInQuery, FundResult> fundInService,
-        IGetService<FundOutQuery, FundResult> fundOutService,
-        IGetService<FundStatusQuery, bool> fundStatusService,
-        IGetService<GameUrlQuery, GameUrlReslut> gameUrlService,
-        IQueryService<GameWagerSettledQuery, GameWagerReslut> gameWagerSettledService,
-        IQueryService<GameWagerUnsettledQuery, GameWagerReslut> gameWagerUnsettledService,
-        IGetService<PlayerBalanceQuery, PlayerBalanceResult> playerBalanceService,
-        ICommandService<PlayerCreateCommand> playerCreateService,
-        ICommandService<PlayerLogoutCommand> playerLogoutService)
-    {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _fundInService = fundInService ?? throw new ArgumentNullException(nameof(fundInService));
-        _fundOutService = fundOutService ?? throw new ArgumentNullException(nameof(fundOutService));
-        _fundStatusService = fundStatusService ?? throw new ArgumentNullException(nameof(fundStatusService));
-        _gameUrlService = gameUrlService ?? throw new ArgumentNullException(nameof(gameUrlService));
-        _gameWagerSettledService = gameWagerSettledService ?? throw new ArgumentNullException(nameof(gameWagerSettledService));
-        _gameWagerUnsettledService = gameWagerUnsettledService ?? throw new ArgumentNullException(nameof(gameWagerUnsettledService));
-        _playerBalanceService = playerBalanceService ?? throw new ArgumentNullException(nameof(playerBalanceService));
-        _playerCreateService = playerCreateService ?? throw new ArgumentNullException(nameof(playerCreateService));
-        _playerLogoutService = playerLogoutService ?? throw new ArgumentNullException(nameof(playerLogoutService));
-    }
-
     public override Task<CheckingServiceReply> CheckingService(CheckingServiceRequest request, ServerCallContext context)
     {
-        _logger.LogWarning("LogOn:{logOn} Message: Create a check connection.({machineName})", DateTime.Now.ToString("o"), request.MachineName);
+        logger.LogWarning("LogOn:{logOn} Message: Create a check connection.({machineName})", DateTime.Now.ToString("o"), request.MachineName);
 
         return Task.FromResult(new CheckingServiceReply
         {
@@ -63,7 +38,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
             Txid: request.Txid,
             Amount: request.Amount);
 
-        var reslut = await _fundInService
+        var reslut = await fundInService
             .GetAsync(
             query: query,
             cancellationToken: context.CancellationToken)
@@ -85,7 +60,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
             Txid: request.Txid,
             Amount: request.Amount);
 
-        var reslut = await _fundOutService
+        var reslut = await fundOutService
             .GetAsync(
             query: query,
             cancellationToken: context.CancellationToken)
@@ -106,7 +81,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
             PlayerCode: request.PlayerCode,
             Txid: request.Txid);
 
-        var reslut = await _fundStatusService
+        var reslut = await fundStatusService
             .GetAsync(
             query: query,
             cancellationToken: context.CancellationToken)
@@ -129,7 +104,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
             PlayerCode: request.PlayerCode,
             Currency: request.Currency);
 
-        var reslut = await _gameUrlService
+        var reslut = await gameUrlService
             .GetAsync(
             query: query,
             cancellationToken: context.CancellationToken)
@@ -152,7 +127,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
             ReportType: (Common.ReportTypes)request.ReportType,
             PageNumber: request.PageNumber);
 
-        var resluts = await _gameWagerSettledService
+        var resluts = await gameWagerSettledService
             .QueryAsync(
             query: query,
             cancellationToken: context.CancellationToken)
@@ -162,7 +137,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
 
         var reply = new GameWagerReply();
 
-        if (resluts.Any())
+        if (resluts.Length != 0)
         {
             foreach (var reslut in resluts)
             {
@@ -197,7 +172,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
             ReportType: (Common.ReportTypes)request.ReportType,
             PageNumber: request.PageNumber);
 
-        var resluts = await _gameWagerUnsettledService
+        var resluts = await gameWagerUnsettledService
             .QueryAsync(
             query: query,
             cancellationToken: context.CancellationToken)
@@ -207,7 +182,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
 
         var reply = new GameWagerReply();
 
-        if (resluts.Any())
+        if (resluts.Length != 0)
         {
             foreach (var reslut in resluts)
             {
@@ -240,7 +215,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
             Cert: request.Cert,
             PlayerCode: request.PlayerCode);
 
-        var reslut = await _playerBalanceService
+        var reslut = await playerBalanceService
             .GetAsync(
             query: query,
             cancellationToken: context.CancellationToken)
@@ -265,7 +240,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
             PlayerCode: request.PlayerCode,
             Currency: request.Currency);
 
-        await _playerCreateService
+        await playerCreateService
             .ExecuteAsync(
             command: command,
             cancellationToken: context.CancellationToken)
@@ -285,7 +260,7 @@ public class GameInterfaceWicketCricketGrpcService : GameInterfaceWicketCricket.
             Cert: request.Cert,
             PlayerCode: request.PlayerCode);
 
-        await _playerLogoutService
+        await playerLogoutService
             .ExecuteAsync(
             command: command,
             cancellationToken: context.CancellationToken)

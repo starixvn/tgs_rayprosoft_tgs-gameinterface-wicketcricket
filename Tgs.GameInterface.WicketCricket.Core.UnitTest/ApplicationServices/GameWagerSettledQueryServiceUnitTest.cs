@@ -22,7 +22,7 @@ public class GameWagerSettledQueryServiceUnitTest
             PageNumber: 1);
 
         var resps = new BetTransferSettledResp[] {
-            new BetTransferSettledResp(
+            new(
                 EventId: 32649630,
                 EventType: 4,
                 CurrencyType: 2,
@@ -98,7 +98,7 @@ public class GameWagerSettledQueryServiceUnitTest
             query)
             .ToArrayAsync();
 
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal("4ue0ujotpmuu", actual.ElementAt(0).PlayerCode);
         Assert.Equal("32649630", actual.ElementAt(0).ExternalRoundId);
         Assert.Equal("2_96935568", actual.ElementAt(0).ExternalWagerId);
@@ -129,7 +129,7 @@ public class GameWagerSettledQueryServiceUnitTest
             PageNumber: 1);
 
         var resps = new BetTransferSettledResp[] {
-            new BetTransferSettledResp(
+            new(
                 EventId: -10020452,
                 EventType: 4,
                 CurrencyType: 2,
@@ -200,7 +200,7 @@ public class GameWagerSettledQueryServiceUnitTest
             query)
             .ToArrayAsync();
 
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal("4ue0ujotpmuu", actual.ElementAt(0).PlayerCode);
         Assert.Equal("-10020452", actual.ElementAt(0).ExternalRoundId);
         Assert.Equal("2_96935585", actual.ElementAt(0).ExternalWagerId);

@@ -3,18 +3,11 @@ using Tgs.ServiceUtility;
 
 namespace Tgs.GameInterface.WicketCricket.Core.ApplicationServices;
 
-internal class GameWagerSettledQueryService : IQueryService<GameWagerSettledQuery, GameWagerReslut>
+internal class GameWagerSettledQueryService(IGameApiClient client) : IQueryService<GameWagerSettledQuery, GameWagerReslut>
 {
-    private readonly IGameApiClient _client;
-
-    public GameWagerSettledQueryService(IGameApiClient client)
-    {
-        _client = client ?? throw new ArgumentNullException(nameof(client));
-    }
-
     public async IAsyncEnumerable<GameWagerReslut> QueryAsync(GameWagerSettledQuery query, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        var resps = await _client
+        var resps = await client
             .QuerySettleBetHistoryAsync(
             apiUrl: query.ApiUrl,
             website: query.Website,
@@ -28,7 +21,7 @@ internal class GameWagerSettledQueryService : IQueryService<GameWagerSettledQuer
             cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 
-        if (!resps.Any())
+        if (resps.Length == 0)
         {
             yield break;
         }
