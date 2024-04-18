@@ -2,29 +2,30 @@
 
 public static class DateTimeExtensions
 {
-    private static readonly TimeZoneInfo _TimeZone;
+	private static readonly TimeZoneInfo _TimeZone;
 
-    static DateTimeExtensions()
-    {
-        _TimeZone = TimeZoneInfo.CreateCustomTimeZone(id: "Taipei Standard Time", baseUtcOffset: TimeSpan.FromHours(+8), "Taipei Standard Time", "Taipei Standard Time");
-    }
+	static DateTimeExtensions()
+	{
+		_TimeZone = TimeZoneInfo.CreateCustomTimeZone(id: "Taipei Standard Time", baseUtcOffset: TimeSpan.FromHours(+8), "Taipei Standard Time", "Taipei Standard Time");
+	}
 
-    public static DateTimeOffset ConvertDateTimeOffset(this string str)
-    {
-        if (string.IsNullOrEmpty(str))
-        {
-            return DateTime.UnixEpoch;
-        }
-        var date = DateTime.Parse(str);
+	public static DateTimeOffset ConvertDateTimeOffset(this string str)
+	{
+		if (string.IsNullOrEmpty(str))
+		{
+			return DateTime.UnixEpoch;
+		}
 
-        return new DateTimeOffset(date, _TimeZone.GetUtcOffset(date));
-    }
+		var date = DateTime.Parse(str);
 
-    public static string ConvertToString(this DateTimeOffset date)
-    {
-        return TimeZoneInfo.ConvertTime(date.ToUniversalTime(), _TimeZone).ToString("yyyy-MM-dd HH:mm");
-    }
+		return new DateTimeOffset(date, _TimeZone.GetUtcOffset(date));
+	}
 
-    public static long ConvertToUnixTimeMilliseconds(this DateTimeOffset date)
-        => TimeZoneInfo.ConvertTime(date.ToUniversalTime(), _TimeZone).ToUnixTimeMilliseconds();
+	public static string ConvertToString(this DateTimeOffset date)
+	{
+		return TimeZoneInfo.ConvertTime(date.ToUniversalTime(), _TimeZone).ToString("yyyy-MM-dd HH:mm");
+	}
+
+	public static long ConvertToUnixTimeMilliseconds(this DateTimeOffset date)
+		=> TimeZoneInfo.ConvertTime(date.ToUniversalTime(), _TimeZone).ToUnixTimeMilliseconds();
 }
