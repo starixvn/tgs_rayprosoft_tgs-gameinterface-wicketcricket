@@ -4,17 +4,18 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<ServerGarbageCollection>true</ServerGarbageCollection>
 		<UserSecretsId>ba61eb4b-e304-4733-9aea-ded9a5cf81de</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<PropertyGroup>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 		<NoWarn>$(NoWarn);1591;0063</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Protos\gameinterfacewicketcricket.proto" />
+		<None Remove="Protos\gameinterfacewicketcricket.proto" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -41,7 +42,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Protobuf Include="Protos\gameinterfacewicketcricket.proto" />
+		<Protobuf Include="Protos\gameinterfacewicketcricket.proto" />
 	</ItemGroup>
 
 </Project>

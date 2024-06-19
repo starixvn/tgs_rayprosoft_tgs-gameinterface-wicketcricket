@@ -4,6 +4,5 @@ namespace Tgs.GameInterface.WicketCricket;
 
 public class DiagnosticsInterceptorOptions
 {
-	public ActivitySource InterceptorActivitySource { get; set; } =
-		new ActivitySource($"Tgs.GameInterface.WicketCricket.DiagnosticsInterceptor");
+	public ActivitySource InterceptorActivitySource { get; set; } = new ActivitySource(typeof(DiagnosticsInterceptorOptions).FullName!);
 }
