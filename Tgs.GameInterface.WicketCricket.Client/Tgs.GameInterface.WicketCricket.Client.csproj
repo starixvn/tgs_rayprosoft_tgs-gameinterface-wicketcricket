@@ -7,7 +7,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<Authors>Raypro</Authors>
 		<PackageProjectUrl>https://gitlab.com/rayprosoft/tgs-gameinterface-wicketcricket</PackageProjectUrl>
 		<RepositoryUrl>https://gitlab.com/rayprosoft/tgs-gameinterface-wicketcricket.git</RepositoryUrl>
@@ -20,22 +20,21 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Google.Protobuf" Version="3.26.1" />
-		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.62.0" />
-		<PackageReference Include="Grpc.Tools" Version="2.62.0">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
+		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+		<PackageReference Include="PhoenixToolkits.NuGet.BuildTools" Version="0.0.3">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="PhoenixToolkits.Protobuf.ExtendTypes" Version="0.0.7" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Protobuf Include="..\Tgs.GameInterface.WicketCricket\Protos\gameinterfacewicketcricket.proto">
-	    <Link>gameinterfacewicketcricket.proto</Link>
-	  </Protobuf>
+	  <ProjectReference Include="..\Tgs.GameInterface.WicketCricket.Protos\Tgs.GameInterface.WicketCricket.Protos.csproj">
+	    <PrivateAssets>all</PrivateAssets>
+	  </ProjectReference>
 	</ItemGroup>
 
 </Project>
