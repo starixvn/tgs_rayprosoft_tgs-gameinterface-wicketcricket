@@ -5,7 +5,7 @@ import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "Tgs.GameInterface.WicketCricket.Protos";
 
-package gameinterfacewicketcricket;
+package GameInterfaceWicketCricket;
 
 // The greeting service definition.
 service GameInterfaceWicketCricket {
