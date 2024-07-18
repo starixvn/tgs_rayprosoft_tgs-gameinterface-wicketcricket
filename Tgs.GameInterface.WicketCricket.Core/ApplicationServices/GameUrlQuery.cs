@@ -1,10 +1,46 @@
 ﻿namespace Tgs.GameInterface.WicketCricket.Core.ApplicationServices;
 
-public record GameUrlQuery(
-	Uri ApiUrl,
-	Uri ExchangeApiUrl,
-	string Website,
-	string Cert,
-	string Agent,
-	string PlayerCode,
-	int Currency);
+public record GameUrlQuery
+{
+	/// <summary>
+	/// The API URL
+	/// </summary>
+	/// <example>https://apiinfo.cckk77.net/</example>
+	public Uri ApiUrl { get; init; } = default!;
+
+	/// <summary>
+	/// The Exchange Api Url
+	/// </summary>
+	/// <example>https://test81.cckk77.net/</example>
+	public Uri ExchangeApiUrl { get; init; } = default!;
+
+	/// <summary>
+	/// The website
+	/// </summary>
+	/// <example>WICKETSPRO</example>
+	public string Website { get; init; } = default!;
+
+	/// <summary>
+	/// The cert
+	/// </summary>
+	/// <example>wkVwQ8sMVr252EA9</example>
+	public string Cert { get; init; } = default!;
+
+	/// <summary>
+	/// The agent
+	/// </summary>
+	/// <example>testpginrma</example>
+	public string Agent { get; init; } = default!;
+
+	/// <summary>
+	/// The player code
+	/// </summary>
+	/// <example>4ue0ujotpmuu</example>
+	public string PlayerCode { get; init; } = default!;
+
+	/// <summary>
+	/// The currency.
+	/// </summary>
+	/// <example>2</example>
+	public int Currency { get; init; } = default!;
+}

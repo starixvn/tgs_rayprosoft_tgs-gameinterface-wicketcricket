@@ -2,13 +2,23 @@
 
 namespace Tgs.GameInterface.WicketCricket.Core.ApplicationServices;
 
-internal class GameUrlGetService(IGameApiClient client) : IGetService<GameUrlQuery, GameUrlReslut>
+internal class GameUrlGetService(
+	IGameDomain domain,
+	IGameApiClient client) : IGetService<GameUrlQuery, GameUrlReslut>
 {
 	public async ValueTask<GameUrlReslut> GetAsync(GameUrlQuery query, CancellationToken cancellationToken = default)
 	{
+		var apiUrl = await domain.GetApiUrlDomainAsync(
+			apiUrl: query.ApiUrl,
+			website: query.Website,
+			cert: query.Cert,
+			priority: 1,
+			cancellationToken: cancellationToken)
+			.ConfigureAwait(false);
+
 		var key = await client
 			.GetKeyAsync(
-			apiUrl: query.ApiUrl,
+			apiUrl: apiUrl,
 			website: query.Website,
 			cert: query.Cert,
 			userId: query.PlayerCode,
@@ -18,9 +28,18 @@ internal class GameUrlGetService(IGameApiClient client) : IGetService<GameUrlQue
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 
+		var exchangeApiUrl = await domain.GetExchangeApiUrlDomainAsync(
+			apiUrl: query.ApiUrl,
+			exchangeApiUrl: query.ExchangeApiUrl,
+			website: query.Website,
+			cert: query.Cert,
+			priority: 1,
+			cancellationToken: cancellationToken)
+			.ConfigureAwait(false);
+
 		var gameUrl = await client
 			.LoginAsync(
-			exchangeApiUrl: query.ExchangeApiUrl,
+			exchangeApiUrl: exchangeApiUrl,
 			website: query.Website,
 			userId: query.PlayerCode,
 			key: key,

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -16,10 +17,10 @@ namespace Tgs.GameInterface.WicketCricket.Core;
 
 internal class GameApiClient(
 	ILogger<GameApiClient> logger,
-	IOptions<PolicySettingsOptions> options,
+	IOptions<PolicySettingsOptions> policySettingsOptions,
 	HttpClient client) : IGameApiClient
 {
-	private readonly PolicySettingsOptions _policySettings = options.Value;
+	private readonly PolicySettingsOptions _policySettingsOptions = policySettingsOptions.Value;
 
 	public async ValueTask<bool> CheckTransferRecordAsync(Uri apiUrl, string website, string cert, string userId, string tsCode, CancellationToken cancellationToken = default)
 	{
@@ -39,9 +40,7 @@ internal class GameApiClient(
 		var jsonNode = await PolicyAsync(
 			apiUrl: url,
 			parameters: parameters,
-			logPrefix: "checkTransferRecord",
-			retryCount: _policySettings.RetryCount,
-			retryWaitSec: _policySettings.RetryWaitSec,
+			logPrefix: nameof(CheckTransferRecordAsync),
 			cancellationToken: cancellationToken).AsTask()
 			.ConfigureAwait(false);
 
@@ -75,9 +74,7 @@ internal class GameApiClient(
 		var jsonNode = await PolicyAsync(
 			apiUrl: url,
 			parameters: parameters,
-			logPrefix: "deposit",
-			retryCount: _policySettings.RetryCount,
-			retryWaitSec: _policySettings.RetryWaitSec,
+			logPrefix: nameof(DepositAsync),
 			cancellationToken: cancellationToken).AsTask()
 			.ConfigureAwait(false);
 
@@ -99,9 +96,7 @@ internal class GameApiClient(
 		var jsonNode = await PolicyAsync(
 			apiUrl: url,
 			parameters: parameters,
-			logPrefix: "getBalance",
-			retryCount: _policySettings.RetryCount,
-			retryWaitSec: _policySettings.RetryWaitSec,
+			logPrefix: nameof(GetBalanceAsync),
 			cancellationToken: cancellationToken).AsTask()
 			.ConfigureAwait(false);
 
@@ -130,9 +125,7 @@ internal class GameApiClient(
 		var jsonNode = await PolicyAsync(
 			apiUrl: url,
 			parameters: parameters,
-			logPrefix: "getBalance",
-			retryCount: _policySettings.RetryCount,
-			retryWaitSec: _policySettings.RetryWaitSec,
+			logPrefix: nameof(GetBalancesAsync),
 			cancellationToken: cancellationToken).AsTask()
 			.ConfigureAwait(false);
 
@@ -178,9 +171,7 @@ internal class GameApiClient(
 		var jsonNode = await PolicyAsync(
 			apiUrl: url,
 			parameters: parameters,
-			logPrefix: "getKey",
-			retryCount: _policySettings.RetryCount,
-			retryWaitSec: _policySettings.RetryWaitSec,
+			logPrefix: nameof(GetKeyAsync),
 			cancellationToken: cancellationToken).AsTask()
 			.ConfigureAwait(false);
 
@@ -213,9 +204,7 @@ internal class GameApiClient(
 		var jsonNode = await PolicyAsync(
 			apiUrl: url,
 			parameters: parameters,
-			logPrefix: "logoutAll",
-			retryCount: _policySettings.RetryCount,
-			retryWaitSec: _policySettings.RetryWaitSec,
+			logPrefix: nameof(LogoutAllAsync),
 			cancellationToken: cancellationToken).AsTask()
 			.ConfigureAwait(false);
 
@@ -237,9 +226,7 @@ internal class GameApiClient(
 		var jsonNode = await PolicyAsync(
 			apiUrl: url,
 			parameters: parameters,
-			logPrefix: "logout",
-			retryCount: _policySettings.RetryCount,
-			retryWaitSec: _policySettings.RetryWaitSec,
+			logPrefix: nameof(LogoutAsync),
 			cancellationToken: cancellationToken).AsTask()
 			.ConfigureAwait(false);
 
@@ -265,9 +252,7 @@ internal class GameApiClient(
 		var jsonNode = await PolicyAsync(
 			apiUrl: url,
 			parameters: parameters,
-			logPrefix: "queryCurrentBetsByLastUpdateDate",
-			retryCount: _policySettings.RetryCount,
-			retryWaitSec: _policySettings.RetryWaitSec,
+			logPrefix: nameof(QueryCurrentBetsByLastUpdateDateAsync),
 			cancellationToken: cancellationToken).AsTask()
 			.ConfigureAwait(false);
 
@@ -284,33 +269,77 @@ internal class GameApiClient(
 
 		var resultList = jsonNode["matched"]!["resultList"]!.AsArray()!;
 
-		if (resultList.Count == 0)
+		foreach (var recordNode in jsonNode["matched"]![propertyName: "resultList"]!.AsArray()!)
 		{
-			yield break;
+			if (recordNode is JsonObject record)
+				yield return new BetTransferUnsettledResp(
+					EventId: record["eventId"]!.GetValue<long>(),
+					EventType: record["eventType"]!.GetValue<int>(),
+					CurrencyType: record["currencyType"]!.GetValue<int>(),
+					CategoryType: record["categoryType"]!.GetValue<int>(),
+					BetId: record["betId"]!.GetValue<long>(),
+					UserId: record["userId"]!.GetValue<string>(),
+					AgentId: record["agentId"]!.GetValue<string>(),
+					BetPlaced: record["betPlaced"]!.GetValue<DateTimeOffset>(),
+					MatchAmount: record["matchAmount"]!.GetValue<decimal>(),
+					UnMatchAmount: record["unMatchAmount"]!.GetValue<decimal>(),
+					DateMatched: record["dateMatched"]!.GetValue<DateTimeOffset>(),
+					AdditionalData: record.ToJsonString()
+					);
+		}
+	}
+
+	public async ValueTask<QueryDomainResp> QueryDomainAsync(Uri apiUrl, string website, string cert, CancellationToken cancellationToken = default)
+	{
+		var url = new Uri(apiUrl, $"/api/apiWallet/{website}/queryDomain");
+		var parameters = new Dictionary<string, string>
+		{
+			["cert"] = cert
+		};
+
+		var jsonNode = await PolicyAsync(
+			apiUrl: url,
+			parameters: parameters,
+			logPrefix: nameof(QueryDomainAsync),
+			cancellationToken: cancellationToken).AsTask()
+			.ConfigureAwait(false);
+
+		if (!jsonNode["status"]!.GetValue<string>().Equals("1", StringComparison.OrdinalIgnoreCase))
+		{
+			throw new StatusCodeException(jsonNode["status"]!.GetValue<string>());
 		}
 
-		foreach (var result in resultList)
+		var privateDomains = new List<QueryDomain>();
+
+		foreach (var privateDomain in jsonNode["privateDomains"]!.AsArray())
 		{
-			if (result is null)
+			if (privateDomain is null)
 			{
 				continue;
 			}
 
-			yield return new BetTransferUnsettledResp(
-				EventId: result["eventId"]!.GetValue<long>(),
-				EventType: result["eventType"]!.GetValue<int>(),
-				CurrencyType: result["currencyType"]!.GetValue<int>(),
-				CategoryType: result["categoryType"]!.GetValue<int>(),
-				BetId: result["betId"]!.GetValue<long>(),
-				UserId: result["userId"]!.GetValue<string>(),
-				AgentId: result["agentId"]!.GetValue<string>(),
-				BetPlaced: result["betPlaced"]!.GetValue<DateTimeOffset>(),
-				MatchAmount: result["matchAmount"]!.GetValue<decimal>(),
-				UnMatchAmount: result["unMatchAmount"]!.GetValue<decimal>(),
-				DateMatched: result["dateMatched"]!.GetValue<DateTimeOffset>(),
-				AdditionalData: result.ToJsonString()
-				);
+			privateDomains.Add(new QueryDomain(
+				Domain: privateDomain["domain"]!.ToString(),
+				Priority: privateDomain["priority"]!.GetValue<int>()));
 		}
+
+		var domains = new List<QueryDomain>();
+
+		foreach (var domain in jsonNode["domains"]!.AsArray())
+		{
+			if (domain is null)
+			{
+				continue;
+			}
+
+			domains.Add(new QueryDomain(
+				Domain: domain["domain"]!.ToString(),
+				Priority: domain["priority"]!.GetValue<int>()));
+		}
+
+		return new QueryDomainResp(
+			PrivateDomains: privateDomains,
+			Domains: domains);
 	}
 
 	public async IAsyncEnumerable<BetTransferSettledResp> QuerySettleBetHistoryAsync(Uri apiUrl, string website, string cert, DateTimeOffset startTime, DateTimeOffset endTime, ReportTypes reportType, int pageNumber, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -330,9 +359,7 @@ internal class GameApiClient(
 		var jsonNode = await PolicyAsync(
 			apiUrl: url,
 			parameters: parameters,
-			logPrefix: "querySettleBetHistory",
-			retryCount: _policySettings.RetryCount,
-			retryWaitSec: _policySettings.RetryWaitSec,
+			logPrefix: nameof(QuerySettleBetHistoryAsync),
 			cancellationToken: cancellationToken).AsTask()
 			.ConfigureAwait(false);
 
@@ -347,30 +374,24 @@ internal class GameApiClient(
 			yield break;
 		}
 
-		var resultList = jsonNode["resultList"]!.AsArray()!;
-
-		if (resultList.Count == 0)
+		foreach (var recordNode in jsonNode["resultList"]!.AsArray())
 		{
-			yield break;
-		}
-
-		foreach (var result in resultList)
-		{
-			yield return new BetTransferSettledResp(
-				EventId: result!["eventId"]!.GetValue<long>(),
-				EventType: result["eventType"]!.GetValue<int>(),
-				CurrencyType: result["currencyType"]!.GetValue<int>(),
-				CategoryType: result["categoryType"]!.GetValue<int>(),
-				BetId: result["betId"]!.GetValue<long>(),
-				UserId: result["userId"]!.GetValue<string>(),
-				AgentId: result["agentId"]!.GetValue<string>(),
-				BetPlaced: result["betPlaced"]!.GetValue<DateTimeOffset>(),
-				MatchSettledDate: result["matchSettledDate"]!.GetValue<DateTimeOffset>(),
-				MarketSettledDate: result["marketSettledDate"]!.GetValue<DateTimeOffset>(),
-				BetStatus: result["betStatus"]!.GetValue<string>(),
-				MatchStake: result["matchStake"]!.GetValue<decimal>(),
-				ProfitLoss: result["profitLoss"]!.GetValue<decimal>(),
-				AdditionalData: result.ToJsonString());
+			if (recordNode is JsonObject record)
+				yield return new BetTransferSettledResp(
+					EventId: record!["eventId"]!.GetValue<long>(),
+					EventType: record["eventType"]!.GetValue<int>(),
+					CurrencyType: record["currencyType"]!.GetValue<int>(),
+					CategoryType: record["categoryType"]!.GetValue<int>(),
+					BetId: record["betId"]!.GetValue<long>(),
+					UserId: record["userId"]!.GetValue<string>(),
+					AgentId: record["agentId"]!.GetValue<string>(),
+					BetPlaced: record["betPlaced"]!.GetValue<DateTimeOffset>(),
+					MatchSettledDate: record["matchSettledDate"]!.GetValue<DateTimeOffset>(),
+					MarketSettledDate: record["marketSettledDate"]!.GetValue<DateTimeOffset>(),
+					BetStatus: record["betStatus"]!.GetValue<string>(),
+					MatchStake: record["matchStake"]!.GetValue<decimal>(),
+					ProfitLoss: record["profitLoss"]!.GetValue<decimal>(),
+					AdditionalData: record.ToJsonString());
 		}
 	}
 
@@ -395,9 +416,7 @@ internal class GameApiClient(
 		var jsonNode = await PolicyAsync(
 			apiUrl: url,
 			parameters: parameters,
-			logPrefix: "withdraw",
-			retryCount: _policySettings.RetryCount,
-			retryWaitSec: _policySettings.RetryWaitSec,
+			logPrefix: nameof(WithdrawAsync),
 			cancellationToken: cancellationToken).AsTask()
 			.ConfigureAwait(false);
 
@@ -406,18 +425,22 @@ internal class GameApiClient(
 			: new WithdrawTransferResp(jsonNode.ToJsonString());
 	}
 
-	private async ValueTask<JsonNode> PolicyAsync(Uri apiUrl, IDictionary<string, string> parameters, string logPrefix, int retryCount, int retryWaitSec, CancellationToken cancellationToken = default)
+	private async ValueTask<JsonNode> PolicyAsync(Uri apiUrl, IDictionary<string, string> parameters, string logPrefix, CancellationToken cancellationToken = default)
 	{
 		var retryPolicy = Policy
 			.HandleResult<JsonNode>(jsonNode => jsonNode["status"]!.ToString().Equals("1010", StringComparison.OrdinalIgnoreCase))
 			.WaitAndRetryAsync(
-			retryCount: retryCount,
-			sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(retryWaitSec),
-			onRetry: (result, retryTime, context) => logger.LogWarning("LogOn:{logOn}  Parameter:{parameters} Result:{result} Delay:{retryTime}",
-					DateTime.Now.ToString("o"),
-					parameters,
-					result,
-					retryTime));
+			retryCount: _policySettingsOptions.GlobalRetryCount,
+			sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(_policySettingsOptions.GlobalRetryWaitSec, retryAttempt)),
+			onRetry: (result, retryTime, retryCount, context) => logger.LogWarning("{logWarning} ",
+					new
+					{
+						LogOn = DateTime.Now.ToString("u"),
+						Parameters = JsonSerializer.Serialize(parameters),
+						RetryCount = retryCount,
+						RetryTime = retryTime,
+						Result = JsonSerializer.Serialize(result)
+					}));
 
 		return await retryPolicy
 			.ExecuteAsync(() => PostAsync(
@@ -431,8 +454,6 @@ internal class GameApiClient(
 
 	private async ValueTask<JsonNode> PostAsync(Uri apiUrl, IDictionary<string, string> parameters, string logPrefix, CancellationToken cancellationToken = default)
 	{
-		logPrefix = $"{nameof(GameApiClient)}.{logPrefix}".ToLower();
-
 		var sw = Stopwatch.StartNew();
 
 		var content = new FormUrlEncodedContent(parameters);
@@ -452,7 +473,7 @@ internal class GameApiClient(
 			responseMessage = await sr.ReadToEndAsync(cancellationToken).ConfigureAwait(false) ?? string.Empty;
 		}
 
-		var apiLogEvent = new GameApiLogEvent
+		var apiLogEvent = new
 		{
 			Path = httpResponseMessage.RequestMessage?.RequestUri?.AbsoluteUri.NoLongerThan(512) ?? string.Empty,
 			Method = httpResponseMessage.RequestMessage?.Method.ToString().NoLongerThan(8) ?? string.Empty,

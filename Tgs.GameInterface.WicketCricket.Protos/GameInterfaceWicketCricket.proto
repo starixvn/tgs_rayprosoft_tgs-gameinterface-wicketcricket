@@ -17,8 +17,8 @@ service GameInterfaceWicketCricket {
   rpc FundIn (FundRequest) returns (FundReply);
   rpc FundStatus(FundStatusRequest) returns (BaseReply);
   rpc GameUrl (GameUrlRequest) returns (GameUrlReply);
-  rpc GameWagerSettled (GameWagerSettledRequest) returns (GameWagerReply);
-  rpc GameWagerUnsettled (GameWagerUnsettledRequest) returns (GameWagerReply);
+  rpc GameRecordSettled (GameRecordSettledRequest) returns (GameRecordReply);
+  rpc GameRecordUnsettled (GameRecordUnsettledRequest) returns (GameRecordReply);
   rpc CheckingService(CheckingServiceRequest) returns (CheckingServiceReply);
 }
 
@@ -40,10 +40,11 @@ message PlayerCreateRequest {
 }
 
 message PlayerLogoutRequest {
-    string exchange_api_url = 1;
-	string website = 2;
-	string cert = 3;
-    string player_code = 4;
+	string api_url = 1;
+    string exchange_api_url = 2;
+	string website = 3;
+	string cert = 4;
+    string player_code = 5;
 }
 
 message FundRequest {
@@ -51,7 +52,7 @@ message FundRequest {
 	string website = 2;
 	string cert = 3;
     string player_code = 4;
-	string txid = 5;
+	string order_id = 5;
 	phoenix.protobuf.DecimalValue amount = 6;
 }
 
@@ -60,7 +61,7 @@ message FundStatusRequest {
 	string website = 2;
 	string cert = 3;
     string player_code = 4;
-	string txid = 5;
+	string order_id = 5;
 }
 
 message GameUrlRequest {
@@ -73,7 +74,7 @@ message GameUrlRequest {
 	int32 currency = 7;
 }
 
-message GameWagerSettledRequest {
+message GameRecordSettledRequest {
     string api_url = 1;
 	string website = 2;
 	string cert = 3;
@@ -84,7 +85,7 @@ message GameWagerSettledRequest {
 
 }
 
-message GameWagerUnsettledRequest {
+message GameRecordUnsettledRequest {
     string api_url = 1;
 	string website = 2;
 	string cert = 3;
@@ -117,14 +118,14 @@ message GameUrlReply {
 	string game_url = 1;
 }
 
-message GameWagerReply {
-	repeated GameWagerInfo items = 1;
+message GameRecordReply {
+	repeated GameRecordInfo items = 1;
 }
 
-message GameWagerInfo {
+message GameRecordInfo {
 	string player_code = 1;
 	string external_round_id = 2;
-	string external_wager_id = 3;
+	string external_bet_id = 3;
     string external_game_id = 4;
 	bool is_closed = 5;
 	bool is_cancelled = 6;
