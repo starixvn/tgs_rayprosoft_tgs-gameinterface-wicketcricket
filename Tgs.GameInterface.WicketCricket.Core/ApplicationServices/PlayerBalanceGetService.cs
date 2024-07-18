@@ -2,13 +2,22 @@
 
 namespace Tgs.GameInterface.WicketCricket.Core.ApplicationServices;
 
-internal class PlayerBalanceGetService(IGameApiClient client) : IGetService<PlayerBalanceQuery, PlayerBalanceResult>
+internal class PlayerBalanceGetService(
+	IGameDomain domain,
+	IGameApiClient client) : IGetService<PlayerBalanceQuery, PlayerBalanceResult>
 {
 	public async ValueTask<PlayerBalanceResult> GetAsync(PlayerBalanceQuery query, CancellationToken cancellationToken = default)
 	{
-		var resp = await client
-			.GetBalanceAsync(
+		var apiUrl = await domain.GetApiUrlDomainAsync(
 			apiUrl: query.ApiUrl,
+			website: query.Website,
+			cert: query.Cert,
+			priority: 1,
+			cancellationToken: cancellationToken)
+			.ConfigureAwait(false);
+
+		var resp = await client.GetBalanceAsync(
+			apiUrl: apiUrl,
 			website: query.Website,
 			cert: query.Cert,
 			userId: query.PlayerCode,

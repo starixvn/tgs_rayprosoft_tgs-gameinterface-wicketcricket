@@ -10,15 +10,26 @@ public class FundInGetServiceUnitTest
 	[Fact]
 	public async Task FundIn_Normal_Process()
 	{
+		var fakeGameDomain = Substitute.For<IGameDomain>();
 		var fakeGameApiClient = Substitute.For<IGameApiClient>();
 
-		var query = new FundInQuery(
-			ApiUrl: new Uri("https://apiinfo.cckk77.net/"),
-			Website: "WICKETSPRO",
-			Cert: "wkVwQ8sMVr252EA9",
-			PlayerCode: "4ue0ujotpmuu",
-			Txid: "1695630056",
-			Amount: 1000.00m);
+		var query = new FundInQuery
+		{
+			ApiUrl = new Uri("https://apiinfo.cckk77.net/"),
+			Website = "WICKETSPRO",
+			Cert = "wkVwQ8sMVr252EA9",
+			PlayerCode = "4ue0ujotpmuu",
+			OrderId = "1695630056",
+			Amount = 1000.00m
+		};
+
+		var apiUrl = new Uri("https://apiinfo.ppkk77.net/");
+		_ = fakeGameDomain.GetApiUrlDomainAsync(
+			apiUrl: Arg.Is(query.ApiUrl),
+			website: Arg.Is(query.Website),
+			cert: Arg.Is(query.Cert),
+			cancellationToken: Arg.Any<CancellationToken>())
+			.Returns(apiUrl);
 
 		var result = new WithdrawTransferResp(
 			Resp: new JsonObject
@@ -28,16 +39,17 @@ public class FundInGetServiceUnitTest
 				["remainingBalance"] = 0.000000m
 			}.ToJsonString());
 		_ = fakeGameApiClient.WithdrawAsync(
-			apiUrl: Arg.Is(query.ApiUrl),
+			apiUrl: Arg.Is(apiUrl),
 			website: Arg.Is(query.Website),
 			cert: Arg.Is(query.Cert),
 			userId: Arg.Is(query.PlayerCode),
-			tsCode: Arg.Is(query.Txid),
+			tsCode: Arg.Is(query.OrderId),
 			amount: Arg.Is(query.Amount),
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns(ValueTask.FromResult(result));
 
 		var service = new FundInGetService(
+			fakeGameDomain,
 			fakeGameApiClient);
 
 		var actual = await service

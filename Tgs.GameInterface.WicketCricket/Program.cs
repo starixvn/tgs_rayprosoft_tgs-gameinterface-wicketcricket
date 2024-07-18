@@ -5,6 +5,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Tgs.GameInterface.WicketCricket;
+using Tgs.GameInterface.WicketCricket.Core;
 using Tgs.GameInterface.WicketCricket.GrpcServices;
 
 var filterInstrumentations = new[] { "html", "ico", "png", "jpg" };
@@ -34,10 +35,7 @@ builder.Services
 		options.Filters.Add(new ProducesAttribute(MediaTypeNames.Application.Json));
 		options.Filters.Add(new ConsumesAttribute(MediaTypeNames.Application.Json));
 	})
-	.AddJsonOptions(options =>
-	{
-		options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-	});
+	.AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 // Add services to the container.
 builder.Services.AddSingleton<DiagnosticsInterceptorOptions>();
@@ -54,19 +52,18 @@ builder.Services.AddGrpc(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-	var xmlFileNames = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml");
-	foreach (var xmlFileName in xmlFileNames)
+	foreach (var xmlFileName in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml"))
 	{
 		c.IncludeXmlComments(xmlFileName);
 	}
 });
 
-builder.Services.AddGameInterface(
-	(options, sp) =>
-	{
-		var configuration = sp.GetRequiredService<IConfiguration>();
-		configuration.GetSection("PolicySettings").Bind(options);
-	});
+builder.Services
+	.AddOptions<PolicySettingsOptions>()
+	.Configure((options) => builder.Configuration.GetSection("PolicySettings").Bind(options))
+	.Services
+	.AddMemoryCache()
+	.AddGameInterfaceCore();
 
 builder.Services
 	.AddOpenTelemetry()

@@ -3,11 +3,11 @@
 public record PolicySettingsOptions
 {
 	/// <summary>
-	/// The retry count
+	/// The global retry count
 	/// </summary>
-	public int RetryCount { get; init; }
+	public int GlobalRetryCount { get; init; }
 	/// <summary>
-	/// The retry wait sec
+	/// The global retry wait sec
 	/// </summary>
-	public int RetryWaitSec { get; init; }
+	public int GlobalRetryWaitSec { get; init; }
 }

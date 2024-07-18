@@ -12,8 +12,8 @@ public class GameInterfaceWicketCricketGrpcService(
 	IGetService<FundOutQuery, FundResult> fundOutService,
 	IGetService<FundStatusQuery, bool> fundStatusService,
 	IGetService<GameUrlQuery, GameUrlReslut> gameUrlService,
-	IQueryService<GameWagerSettledQuery, GameWagerReslut> gameWagerSettledService,
-	IQueryService<GameWagerUnsettledQuery, GameWagerReslut> gameWagerUnsettledService,
+	IQueryService<GameRecordSettledQuery, GameRecordReslut> GameRecordSettledService,
+	IQueryService<GameRecordUnsettledQuery, GameRecordReslut> GameRecordUnsettledService,
 	IGetService<PlayerBalanceQuery, PlayerBalanceResult> playerBalanceService,
 	ICommandService<PlayerCreateCommand> playerCreateService,
 	ICommandService<PlayerLogoutCommand> playerLogoutService) : GameInterfaceWicketCricket.GameInterfaceWicketCricketBase
@@ -30,13 +30,15 @@ public class GameInterfaceWicketCricketGrpcService(
 
 	public override async Task<FundReply> FundIn(FundRequest request, ServerCallContext context)
 	{
-		var query = new FundInQuery(
-			ApiUrl: new Uri(request.ApiUrl),
-			Website: request.Website,
-			Cert: request.Cert,
-			PlayerCode: request.PlayerCode,
-			Txid: request.Txid,
-			Amount: request.Amount);
+		var query = new FundInQuery
+		{
+			ApiUrl = new Uri(request.ApiUrl),
+			Website = request.Website,
+			Cert = request.Cert,
+			PlayerCode = request.PlayerCode,
+			OrderId = request.OrderId,
+			Amount = request.Amount
+		};
 
 		var reslut = await fundInService
 			.GetAsync(
@@ -52,13 +54,15 @@ public class GameInterfaceWicketCricketGrpcService(
 
 	public override async Task<FundReply> FundOut(FundRequest request, ServerCallContext context)
 	{
-		var query = new FundOutQuery(
-			ApiUrl: new Uri(request.ApiUrl),
-			Website: request.Website,
-			Cert: request.Cert,
-			PlayerCode: request.PlayerCode,
-			Txid: request.Txid,
-			Amount: request.Amount);
+		var query = new FundOutQuery
+		{
+			ApiUrl = new Uri(request.ApiUrl),
+			Website = request.Website,
+			Cert = request.Cert,
+			PlayerCode = request.PlayerCode,
+			OrderId = request.OrderId,
+			Amount = request.Amount
+		};
 
 		var reslut = await fundOutService
 			.GetAsync(
@@ -74,15 +78,16 @@ public class GameInterfaceWicketCricketGrpcService(
 
 	public override async Task<BaseReply> FundStatus(FundStatusRequest request, ServerCallContext context)
 	{
-		var query = new FundStatusQuery(
-			ApiUrl: new Uri(request.ApiUrl),
-			Website: request.Website,
-			Cert: request.Cert,
-			PlayerCode: request.PlayerCode,
-			Txid: request.Txid);
+		var query = new FundStatusQuery
+		{
+			ApiUrl = new Uri(request.ApiUrl),
+			Website = request.Website,
+			Cert = request.Cert,
+			PlayerCode = request.PlayerCode,
+			OrderId = request.OrderId
+		};
 
-		var reslut = await fundStatusService
-			.GetAsync(
+		var reslut = await fundStatusService.GetAsync(
 			query: query,
 			cancellationToken: context.CancellationToken)
 			.ConfigureAwait(false);
@@ -95,14 +100,16 @@ public class GameInterfaceWicketCricketGrpcService(
 
 	public override async Task<GameUrlReply> GameUrl(GameUrlRequest request, ServerCallContext context)
 	{
-		var query = new GameUrlQuery(
-			ApiUrl: new Uri(request.ApiUrl),
-			ExchangeApiUrl: new Uri(request.ExchangeApiUrl),
-			Website: request.Website,
-			Cert: request.Cert,
-			Agent: request.Agent,
-			PlayerCode: request.PlayerCode,
-			Currency: request.Currency);
+		var query = new GameUrlQuery
+		{
+			ApiUrl = new Uri(request.ApiUrl),
+			ExchangeApiUrl = new Uri(request.ExchangeApiUrl),
+			Website = request.Website,
+			Cert = request.Cert,
+			Agent = request.Agent,
+			PlayerCode = request.PlayerCode,
+			Currency = request.Currency
+		};
 
 		var reslut = await gameUrlService
 			.GetAsync(
@@ -116,94 +123,85 @@ public class GameInterfaceWicketCricketGrpcService(
 		};
 	}
 
-	public override async Task<GameWagerReply> GameWagerSettled(GameWagerSettledRequest request, ServerCallContext context)
+	public override async Task<GameRecordReply> GameRecordSettled(GameRecordSettledRequest request, ServerCallContext context)
 	{
-		var query = new GameWagerSettledQuery(
-			ApiUrl: new Uri(request.ApiUrl),
-			Website: request.Website,
-			Cert: request.Cert,
-			StartTime: request.StartTime.ToDateTimeOffset(),
-			EndTime: request.EndTime.ToDateTimeOffset(),
-			ReportType: (Common.ReportTypes)request.ReportType,
-			PageNumber: request.PageNumber);
+		var query = new GameRecordSettledQuery
+		{
+			ApiUrl = new Uri(request.ApiUrl),
+			Website = request.Website,
+			Cert = request.Cert,
+			StartTime = request.StartTime.ToDateTimeOffset(),
+			EndTime = request.EndTime.ToDateTimeOffset(),
+			ReportType = (Common.ReportTypes)request.ReportType,
+			PageNumber = request.PageNumber
+		};
 
-		var resluts = await gameWagerSettledService
-			.QueryAsync(
+		var resluts = GameRecordSettledService.QueryAsync(
 			query: query,
-			cancellationToken: context.CancellationToken)
-			.ToArrayAsync(
 			cancellationToken: context.CancellationToken)
 			.ConfigureAwait(false);
 
-		var reply = new GameWagerReply();
+		var reply = new GameRecordReply();
 
-		if (resluts.Length != 0)
+		await foreach (var reslut in resluts)
 		{
-			foreach (var reslut in resluts)
+			reply.Items.Add(new GameRecordInfo
 			{
-				reply.Items.Add(new GameWagerInfo
-				{
-					PlayerCode = reslut.PlayerCode,
-					ExternalRoundId = reslut.ExternalRoundId,
-					ExternalWagerId = reslut.ExternalWagerId,
-					ExternalGameId = reslut.ExternalGameId,
-					IsClosed = reslut.IsClosed,
-					IsCancelled = reslut.IsCancelled,
-					IsVoided = reslut.IsVoided,
-					ExternalCreatedOn = reslut.ExternalCreatedOn.ToTimestamp(),
-					ExternalClosedOn = reslut.ExternalClosedOn.ToTimestamp(),
-					Bet = reslut.Bet,
-					Settle = reslut.Settle,
-					WinLoss = reslut.WinLoss,
-					AdditionalData = reslut.AdditionalData
-				});
-			}
+				PlayerCode = reslut.PlayerCode,
+				ExternalRoundId = reslut.ExternalRoundId,
+				ExternalBetId = reslut.ExternalBetId,
+				ExternalGameId = reslut.ExternalGameId,
+				IsClosed = reslut.IsClosed,
+				IsCancelled = reslut.IsCancelled,
+				IsVoided = reslut.IsVoided,
+				ExternalCreatedOn = reslut.ExternalCreatedOn.ToTimestamp(),
+				ExternalClosedOn = reslut.ExternalClosedOn.ToTimestamp(),
+				Bet = reslut.Bet,
+				Settle = reslut.Settle,
+				WinLoss = reslut.WinLoss,
+				AdditionalData = reslut.AdditionalData
+			});
 		}
 
 		return reply;
 	}
 
-	public override async Task<GameWagerReply> GameWagerUnsettled(GameWagerUnsettledRequest request, ServerCallContext context)
+	public override async Task<GameRecordReply> GameRecordUnsettled(GameRecordUnsettledRequest request, ServerCallContext context)
 	{
-		var query = new GameWagerUnsettledQuery(
-			ApiUrl: new Uri(request.ApiUrl),
-			Website: request.Website,
-			Cert: request.Cert,
-			LastUpdateTime: request.LastUpdateTime.ToDateTimeOffset(),
-			ReportType: (Common.ReportTypes)request.ReportType,
-			PageNumber: request.PageNumber);
-
-		var resluts = await gameWagerUnsettledService
-			.QueryAsync(
-			query: query,
-			cancellationToken: context.CancellationToken)
-			.ToArrayAsync(
-			cancellationToken: context.CancellationToken)
-			.ConfigureAwait(false);
-
-		var reply = new GameWagerReply();
-
-		if (resluts.Length != 0)
+		var query = new GameRecordUnsettledQuery
 		{
-			foreach (var reslut in resluts)
+			ApiUrl = new Uri(request.ApiUrl),
+			Website = request.Website,
+			Cert = request.Cert,
+			LastUpdateTime = request.LastUpdateTime.ToDateTimeOffset(),
+			ReportType = (Common.ReportTypes)request.ReportType,
+			PageNumber = request.PageNumber
+		};
+
+		var resluts = GameRecordUnsettledService.QueryAsync(
+			query: query,
+			cancellationToken: context.CancellationToken);
+
+		var reply = new GameRecordReply();
+
+		await foreach (var reslut in resluts)
+		{
+			reply.Items.Add(new GameRecordInfo
 			{
-				reply.Items.Add(new GameWagerInfo
-				{
-					PlayerCode = reslut.PlayerCode,
-					ExternalRoundId = reslut.ExternalRoundId,
-					ExternalWagerId = reslut.ExternalWagerId,
-					ExternalGameId = reslut.ExternalGameId,
-					IsClosed = reslut.IsClosed,
-					IsCancelled = reslut.IsCancelled,
-					IsVoided = reslut.IsVoided,
-					ExternalCreatedOn = reslut.ExternalCreatedOn.ToTimestamp(),
-					ExternalClosedOn = reslut.ExternalClosedOn.ToTimestamp(),
-					Bet = reslut.Bet,
-					Settle = reslut.Settle,
-					WinLoss = reslut.WinLoss,
-					AdditionalData = reslut.AdditionalData
-				});
-			}
+				PlayerCode = reslut.PlayerCode,
+				ExternalRoundId = reslut.ExternalRoundId,
+				ExternalBetId = reslut.ExternalBetId,
+				ExternalGameId = reslut.ExternalGameId,
+				IsClosed = reslut.IsClosed,
+				IsCancelled = reslut.IsCancelled,
+				IsVoided = reslut.IsVoided,
+				ExternalCreatedOn = reslut.ExternalCreatedOn.ToTimestamp(),
+				ExternalClosedOn = reslut.ExternalClosedOn.ToTimestamp(),
+				Bet = reslut.Bet,
+				Settle = reslut.Settle,
+				WinLoss = reslut.WinLoss,
+				AdditionalData = reslut.AdditionalData
+			});
 		}
 
 		return reply;
@@ -211,11 +209,13 @@ public class GameInterfaceWicketCricketGrpcService(
 
 	public override async Task<PlayerBalanceReply> PlayerBalance(PlayerBalanceRequest request, ServerCallContext context)
 	{
-		var query = new PlayerBalanceQuery(
-			ApiUrl: new Uri(request.ApiUrl),
-			Website: request.Website,
-			Cert: request.Cert,
-			PlayerCode: request.PlayerCode);
+		var query = new PlayerBalanceQuery
+		{
+			ApiUrl = new Uri(request.ApiUrl),
+			Website = request.Website,
+			Cert = request.Cert,
+			PlayerCode = request.PlayerCode
+		};
 
 		var reslut = await playerBalanceService
 			.GetAsync(
@@ -234,13 +234,15 @@ public class GameInterfaceWicketCricketGrpcService(
 
 	public override async Task<BaseReply> PlayerCreate(PlayerCreateRequest request, ServerCallContext context)
 	{
-		var command = new PlayerCreateCommand(
-			ApiUrl: new Uri(request.ApiUrl),
-			Website: request.Website,
-			Cert: request.Cert,
-			Agent: request.Agent,
-			PlayerCode: request.PlayerCode,
-			Currency: request.Currency);
+		var command = new PlayerCreateCommand
+		{
+			ApiUrl = new Uri(request.ApiUrl),
+			Website = request.Website,
+			Cert = request.Cert,
+			Agent = request.Agent,
+			PlayerCode = request.PlayerCode,
+			Currency = request.Currency
+		};
 
 		await playerCreateService
 			.ExecuteAsync(
@@ -256,11 +258,14 @@ public class GameInterfaceWicketCricketGrpcService(
 
 	public override async Task<BaseReply> PlayerLogout(PlayerLogoutRequest request, ServerCallContext context)
 	{
-		var command = new PlayerLogoutCommand(
-			ExchangeApiUrl: new Uri(request.ExchangeApiUrl),
-			Website: request.Website,
-			Cert: request.Cert,
-			PlayerCode: request.PlayerCode);
+		var command = new PlayerLogoutCommand
+		{
+			ApiUrl = new Uri(request.ApiUrl),
+			ExchangeApiUrl = new Uri(request.ExchangeApiUrl),
+			Website = request.Website,
+			Cert = request.Cert,
+			PlayerCode = request.PlayerCode
+		};
 
 		await playerLogoutService
 			.ExecuteAsync(

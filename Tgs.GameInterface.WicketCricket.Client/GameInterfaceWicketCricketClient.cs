@@ -23,7 +23,7 @@ public class GameInterfaceWicketCricketClient(
 		return reply.MachineName;
 	}
 
-	public async ValueTask<FundReply> FundInAsync(Uri apiUrl, string website, string cert, string playerCode, string txid, decimal amount, CancellationToken cancellationToken = default)
+	public async ValueTask<FundReply> FundInAsync(Uri apiUrl, string website, string cert, string playerCode, string orderId, decimal amount, CancellationToken cancellationToken = default)
 		=> await client.FundInAsync(
 			request: new FundRequest
 			{
@@ -31,13 +31,13 @@ public class GameInterfaceWicketCricketClient(
 				Website = website,
 				Cert = cert,
 				PlayerCode = playerCode,
-				Txid = txid,
+				OrderId = orderId,
 				Amount = amount
 			},
 			cancellationToken: cancellationToken)
 		.ConfigureAwait(false);
 
-	public async ValueTask<FundReply> FundOutAsync(Uri apiUrl, string website, string cert, string playerCode, string txid, decimal amount, CancellationToken cancellationToken = default)
+	public async ValueTask<FundReply> FundOutAsync(Uri apiUrl, string website, string cert, string playerCode, string orderId, decimal amount, CancellationToken cancellationToken = default)
 		=> await client.FundOutAsync(
 			request: new FundRequest
 			{
@@ -45,13 +45,13 @@ public class GameInterfaceWicketCricketClient(
 				Website = website,
 				Cert = cert,
 				PlayerCode = playerCode,
-				Txid = txid,
+				OrderId = orderId,
 				Amount = amount
 			},
 			cancellationToken: cancellationToken)
 		.ConfigureAwait(false);
 
-	public async ValueTask<bool> FundStatusAsync(Uri apiUrl, string website, string cert, string playerCode, string txid, CancellationToken cancellationToken = default)
+	public async ValueTask<bool> FundStatusAsync(Uri apiUrl, string website, string cert, string playerCode, string orderId, CancellationToken cancellationToken = default)
 		=> (await client.FundStatusAsync(
 			request: new FundStatusRequest
 			{
@@ -59,7 +59,7 @@ public class GameInterfaceWicketCricketClient(
 				Website = website,
 				Cert = cert,
 				PlayerCode = playerCode,
-				Txid = txid,
+				OrderId = orderId,
 			},
 			cancellationToken: cancellationToken)
 		.ConfigureAwait(false))
@@ -81,10 +81,10 @@ public class GameInterfaceWicketCricketClient(
 		.ConfigureAwait(false))
 		.GameUrl;
 
-	public async IAsyncEnumerable<GameWagerInfo> GameWagerSettledAsync(Uri apiUrl, string website, string cert, DateTimeOffset startTime, DateTimeOffset endTime, ReportTypes reportType, int pageNumber, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+	public async IAsyncEnumerable<GameRecordInfo> GameRecordSettledAsync(Uri apiUrl, string website, string cert, DateTimeOffset startTime, DateTimeOffset endTime, ReportTypes reportType, int pageNumber, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 	{
-		var reply = await client.GameWagerSettledAsync(
-			request: new GameWagerSettledRequest
+		var reply = await client.GameRecordSettledAsync(
+			request: new GameRecordSettledRequest
 			{
 				ApiUrl = apiUrl.ToString(),
 				Website = website,
@@ -92,44 +92,32 @@ public class GameInterfaceWicketCricketClient(
 				StartTime = startTime.ToTimestamp(),
 				EndTime = endTime.ToTimestamp(),
 				ReportType = reportType,
+				PageNumber = pageNumber
 			},
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 
-		if (!(reply.Items ?? Enumerable.Empty<GameWagerInfo>()).Any())
-		{
-			yield break;
-		}
-
-		foreach (var item in reply.Items ?? Enumerable.Empty<GameWagerInfo>())
-		{
-			yield return item;
-		}
+		foreach (var info in reply.Items)
+			yield return info;
 	}
 
-	public async IAsyncEnumerable<GameWagerInfo> GameWagerUnsettledAsync(Uri apiUrl, string website, string cert, DateTimeOffset lastUpdateTime, ReportTypes reportType, int pageNumber, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+	public async IAsyncEnumerable<GameRecordInfo> GameRecordUnsettledAsync(Uri apiUrl, string website, string cert, DateTimeOffset lastUpdateTime, ReportTypes reportType, int pageNumber, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 	{
-		var reply = await client.GameWagerUnsettledAsync(
-			request: new GameWagerUnsettledRequest
+		var reply = await client.GameRecordUnsettledAsync(
+			request: new GameRecordUnsettledRequest
 			{
 				ApiUrl = apiUrl.ToString(),
 				Website = website,
 				Cert = cert,
 				LastUpdateTime = lastUpdateTime.ToTimestamp(),
 				ReportType = reportType,
+				PageNumber = pageNumber
 			},
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 
-		if (!(reply.Items ?? Enumerable.Empty<GameWagerInfo>()).Any())
-		{
-			yield break;
-		}
-
-		foreach (var item in reply.Items ?? Enumerable.Empty<GameWagerInfo>())
-		{
-			yield return item;
-		}
+		foreach (var info in reply.Items)
+			yield return info;
 	}
 
 	public async ValueTask<PlayerBalanceReply> PlayerBalanceAsync(Uri apiUrl, string website, string cert, string playerCode, CancellationToken cancellationToken = default)
@@ -158,10 +146,11 @@ public class GameInterfaceWicketCricketClient(
 			cancellationToken: cancellationToken)
 		.ConfigureAwait(false);
 
-	public async ValueTask PlayerLogoutAsync(Uri exchangeApiUrl, string website, string cert, string playerCode, CancellationToken cancellationToken = default)
+	public async ValueTask PlayerLogoutAsync(Uri apiUrl, Uri exchangeApiUrl, string website, string cert, string playerCode, CancellationToken cancellationToken = default)
 		=> _ = await client.PlayerLogoutAsync(
 			request: new PlayerLogoutRequest
 			{
+				ApiUrl = apiUrl.ToString(),
 				ExchangeApiUrl = exchangeApiUrl.ToString(),
 				Website = website,
 				Cert = cert,
